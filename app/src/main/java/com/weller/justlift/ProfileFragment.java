@@ -84,7 +84,7 @@ public class ProfileFragment extends Fragment implements AdapterView.OnItemSelec
                     toastMessage("Enter data");
                 }
                 */
-
+//
                Toast.makeText(getContext(), firstNameEditText.getText().toString(), Toast.LENGTH_LONG).show();
             }
         });
