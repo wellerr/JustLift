@@ -1,0 +1,28 @@
+<resources>
+    <string name="app_name">JustLift</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="title_activity_profile">Profile</string>
+
+    <string-array name="sex">
+        <item>Male</item>
+        <item>Female</item>
+    </string-array>
+
+
+    <string-array name="activity">
+        <item>Sedentary (little to no exercise)</item>
+        <item>Lightly Active (intense exercise once or twice a week)</item>
+        <item>Moderately Active (intense exercise 3 to 4 times a week)</item>
+        <item>Very Active (intense exercise 5 to 7 times a week)</item>
+        <item>Extremely Active (very active + a physically demanding daily schedule)</item>
+    </string-array>
+
+    <string-array name="gains">
+        <item>Slow Gains (0.5lbs a week)</item>
+        <item>Standard Gains (1lb a week)</item>
+        <item>Faster Gains (1.5lbs a week)</item>
+        <item>Extreme Gains (2lbs a week)</item>
+    </string-array>
+</resources>
