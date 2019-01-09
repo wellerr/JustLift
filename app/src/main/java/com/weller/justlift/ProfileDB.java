@@ -6,6 +6,11 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
+import android.widget.Toast;
+
+import java.util.Random;
+
+import static java.security.AccessController.getContext;
 
 public class ProfileDB extends SQLiteOpenHelper {
 
@@ -37,14 +42,36 @@ public class ProfileDB extends SQLiteOpenHelper {
         onCreate(db);
     }
 
+    public boolean test(){
+        //Log.i(TAG, "successful");
+        Random rand = new Random();
+        int decide = rand.nextInt(1);
+        boolean test;
+        if (decide ==1) {
+             test = true;
+        }
+        else{
+             test = false;
+        }
+
+        return test;
+    }
+
     public boolean addData (String item) {
         SQLiteDatabase db = this.getWritableDatabase();
+        //SQLiteDatabase db;
+
         ContentValues contentValues = new ContentValues();
         contentValues.put(COL_2, item);
 
         Log.i(TAG, "addData: Adding " + item + " to " + Table_Name);
         long result = db.insert(Table_Name, null, contentValues);
 
+//        long result= -1;
+        if (item.contains("a")){
+            result=0;
+        }
+        //long result = 0;
         if (result == -1){
             return false;
         }
@@ -53,7 +80,7 @@ public class ProfileDB extends SQLiteOpenHelper {
         }
 
 
-        }
+    }
     public Cursor getData() {
         SQLiteDatabase db1 = this.getWritableDatabase();
         String query = "SELECT * FROM " + Table_Name;

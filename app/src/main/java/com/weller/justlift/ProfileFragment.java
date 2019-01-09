@@ -1,7 +1,9 @@
 package com.weller.justlift;
 
+import android.content.ContentValues;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.database.DatabaseErrorHandler;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.database.sqlite.SQLiteDatabase;
@@ -11,6 +13,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,7 +28,15 @@ import static android.content.Context.MODE_PRIVATE;
 
 public class ProfileFragment extends Fragment implements AdapterView.OnItemSelectedListener {
 
+
     ProfileDB db;
+  //  SQLiteDatabase db;
+   // SQLiteOpenHelper openHelper;
+   // SQLite sql;
+
+    TextInputEditText firstNameEditText;
+    TextInputEditText surnameEditText;
+   // Cursor cursor;
 
     @Override
 
@@ -36,10 +47,10 @@ public class ProfileFragment extends Fragment implements AdapterView.OnItemSelec
     /*issue i was having was not saving fragment as view and returning
        I needed to use this view as the context for the spinner as seen below
      */
-        final TextInputEditText firstNameEditText = v.findViewById(R.id.text_firstname);
-        TextInputEditText surnameEditText = v.findViewById(R.id.text_surname);
-        TextInputEditText ageEditText = v.findViewById(R.id.text_age);
-        TextInputEditText weightEditText = v.findViewById(R.id.text_weight);
+        firstNameEditText = v.findViewById(R.id.text_firstname);
+        surnameEditText = v.findViewById(R.id.text_surname);
+        // TextInputEditText ageEditText = v.findViewById(R.id.text_age);
+        // TextInputEditText weightEditText = v.findViewById(R.id.text_weight);
 
 
         Spinner spinner_sex = v.findViewById(R.id.spinner_sex);
@@ -65,57 +76,45 @@ public class ProfileFragment extends Fragment implements AdapterView.OnItemSelec
         Button saveButton = (v.findViewById(R.id.submitProfile));
         Button viewButton = (v.findViewById(R.id.viewData));
 
-      /*  saveButton.setOnClickListener(new View.OnClickListener() {
+        db = new ProfileDB(getContext());
+
+        saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getContext(),"button clicked", Toast.LENGTH_LONG).show();
-            }
-        });
-*/
-       saveButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-               /* String newEntry =   firstNameEditText.toString();
+
+                String newEntry =   firstNameEditText.getText().toString();
                 if(newEntry.length()!=0){
-                  // AddData(newEntry); // when this is clicked, app crashes
-                  //  firstNameEditText.setText("");//crashes whole fragment
+                   AddData(newEntry); //
                 }
                 else{
                     toastMessage("Enter data");
                 }
-                */
-//
-               Toast.makeText(getContext(), firstNameEditText.getText().toString(), Toast.LENGTH_LONG).show();
+
             }
         });
 
-    /*
         viewButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getContext(), ListDataActivity.class);
+                Intent intent = new Intent(getContext(), com.weller.justlift.ListActivity.class);
                 startActivity(intent);
             }
-
-        }
-        */
-
-
-
-
-
+        });
         return v;
-
     }
 
-    public void AddData(String newEntry) {
-        boolean insertData = db.addData(newEntry);
 
+
+    public void AddData(String newEntry) {
+      //  boolean insertData = true;//db.addData(newEntry);
+
+
+        boolean insertData = db.addData(newEntry);
         if (insertData) {
-            toastMessage("Data successfully inserted");
+            toastMessage("Test successful");
         }
         else {
-            toastMessage("Something fucked up");
+            toastMessage("Test successful ver 2");
         }
     }
 
