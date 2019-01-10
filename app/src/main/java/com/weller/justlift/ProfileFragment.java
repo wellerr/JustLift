@@ -112,7 +112,7 @@ public class ProfileFragment extends Fragment implements AdapterView.OnItemSelec
         return v;
     }
     public void AddData(String firstName, String surname, String age, String height, String weight, String gender, String activity, String gains) {
-        boolean insertData = db.addData(firstName, surname, age, height, weight, gender, activity, gains);
+        boolean insertData = db.addProfileData(firstName, surname, age, height, weight, gender, activity, gains);
         if (insertData) {
             toastMessage("Test successful");
         }
