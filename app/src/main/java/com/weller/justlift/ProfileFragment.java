@@ -1,42 +1,44 @@
 package com.weller.justlift;
 
-import android.content.ContentValues;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.database.Cursor;
-import android.database.DatabaseErrorHandler;
-import android.database.sqlite.SQLiteOpenHelper;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputEditText;
-import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
-import static android.content.Context.MODE_PRIVATE;
 
 public class ProfileFragment extends Fragment implements AdapterView.OnItemSelectedListener {
 
 
     ProfileDB db;
-  //  SQLiteDatabase db;
-   // SQLiteOpenHelper openHelper;
-   // SQLite sql;
 
     TextInputEditText firstNameEditText;
     TextInputEditText surnameEditText;
-   // Cursor cursor;
+    TextInputEditText ageEditText;
+    TextInputEditText heightEditText;
+    TextInputEditText weightEditText;
+
+    Spinner spinner_gender;
+    Spinner spinner_activity;
+    Spinner spinner_gains;
+
+    String firstNameString;
+    String surnameString;
+    String ageString;
+    String heightString;
+    String weightString;
+    String activityString;
+    String genderString;
+    String gainsString;
+
 
     @Override
 
@@ -49,25 +51,26 @@ public class ProfileFragment extends Fragment implements AdapterView.OnItemSelec
      */
         firstNameEditText = v.findViewById(R.id.text_firstname);
         surnameEditText = v.findViewById(R.id.text_surname);
-        // TextInputEditText ageEditText = v.findViewById(R.id.text_age);
-        // TextInputEditText weightEditText = v.findViewById(R.id.text_weight);
+        ageEditText = v.findViewById(R.id.text_age);
+        heightEditText = v.findViewById(R.id.text_height);
+        weightEditText = v.findViewById(R.id.text_weight);
 
 
-        Spinner spinner_sex = v.findViewById(R.id.spinner_sex);
-        ArrayAdapter<CharSequence> adapter_sex = ArrayAdapter.createFromResource(v.getContext(), R.array.sex, android.R.layout.simple_spinner_item);
-        adapter_sex.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner_sex.setAdapter(adapter_sex);
-        spinner_sex.setOnItemSelectedListener(this);
-        // this spinner is for the sex of the user
+        spinner_gender = v.findViewById(R.id.spinner_gender);
+        ArrayAdapter<CharSequence> adapter_gender = ArrayAdapter.createFromResource(v.getContext(), R.array.sex, android.R.layout.simple_spinner_item);
+        adapter_gender.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner_gender.setAdapter(adapter_gender);
+        spinner_gender.setOnItemSelectedListener(this);
+        // this spinner is for the genderString of the user
 
-        Spinner spinner_activity = v.findViewById(R.id.spinner_activity);
+        spinner_activity = v.findViewById(R.id.spinner_activity);
         ArrayAdapter<CharSequence> adapter_activity = ArrayAdapter.createFromResource(v.getContext(), R.array.activity, android.R.layout.simple_spinner_item);
         adapter_activity.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner_activity.setAdapter(adapter_activity);
         spinner_activity.setOnItemSelectedListener(this);
 
 
-        Spinner spinner_gains = v.findViewById(R.id.spinner_gains);
+        spinner_gains = v.findViewById(R.id.spinner_gains);
         ArrayAdapter<CharSequence> adapter_gains = ArrayAdapter.createFromResource(v.getContext(), R.array.gains, android.R.layout.simple_spinner_item);
         adapter_activity.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner_gains.setAdapter(adapter_gains);
@@ -79,17 +82,23 @@ public class ProfileFragment extends Fragment implements AdapterView.OnItemSelec
         db = new ProfileDB(getContext());
 
         saveButton.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View v) {
-
-                String newEntry =   firstNameEditText.getText().toString();
-                if(newEntry.length()!=0){
-                   AddData(newEntry); //
+                firstNameString =   firstNameEditText.getText().toString();
+                surnameString =   surnameEditText.getText().toString();
+                ageString =   ageEditText.getText().toString();
+                heightString =   heightEditText.getText().toString();
+                weightString =   weightEditText.getText().toString();
+                genderString = spinner_gender.getSelectedItem().toString();
+                activityString = spinner_activity.getSelectedItem().toString();
+                gainsString = spinner_gains.getSelectedItem().toString();
+                if(firstNameString.length()!=0){
+                   AddData(firstNameString, surnameString, ageString, heightString, weightString, genderString, activityString, gainsString); //
                 }
                 else{
                     toastMessage("Enter data");
                 }
-
             }
         });
 
@@ -102,14 +111,8 @@ public class ProfileFragment extends Fragment implements AdapterView.OnItemSelec
         });
         return v;
     }
-
-
-
-    public void AddData(String newEntry) {
-      //  boolean insertData = true;//db.addData(newEntry);
-
-
-        boolean insertData = db.addData(newEntry);
+    public void AddData(String firstName, String surname, String age, String height, String weight, String gender, String activity, String gains) {
+        boolean insertData = db.addData(firstName, surname, age, height, weight, gender, activity, gains);
         if (insertData) {
             toastMessage("Test successful");
         }
@@ -124,7 +127,6 @@ public class ProfileFragment extends Fragment implements AdapterView.OnItemSelec
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         String text = parent.getItemAtPosition(position).toString();
-      //  Toast.makeText(parent.getContext(),text, Toast.LENGTH_SHORT).show();
     }
 
     @Override

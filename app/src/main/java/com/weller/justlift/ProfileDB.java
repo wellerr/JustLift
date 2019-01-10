@@ -18,11 +18,19 @@ public class ProfileDB extends SQLiteOpenHelper {
 
     public static final String DB_Name = "User.db";
     public static final String Table_Name = "Profile_table";
-    public static final String COL_1 = "ID";
-    public static final String COL_2 = "FirstName";
-    public static final String COL_3 = "Surname";
-    public static final String COL_4_ = "Age";
-    public static final String COL_5 = "Height";
+    public static final String COL_0 = "ID";
+    public static final String COL_1 = "FirstName";
+    public static final String COL_2 = "Surname";
+    public static final String COL_3 = "Age";
+    public static final String COL_4 = "Height";
+    public static final String COL_5 = "Weight";
+    public static final String COL_6 = "Gender";
+    public static final String COL_7 = "Activity";
+    public static final String COL_8 = "Gains";
+
+    private int age;
+    private int weight;
+    private int height;
 
     public ProfileDB(Context context ) {
         super(context, DB_Name, null, 1);
@@ -30,7 +38,7 @@ public class ProfileDB extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL("create table " + Table_Name + " (ID INTEGER PRIMARY KEY AUTOINCREMENT,FirstName TEXT,Surname TEXT,Age INTEGER, Height INTEGER)");
+        db.execSQL("create table " + Table_Name + " (ID INTEGER PRIMARY KEY AUTOINCREMENT,FirstName TEXT,Surname TEXT,Age INTEGER, Height INTEGER, Weight INTEGER, Gender TEXT, Activity TEXT, Gains TEXT)");
     }//executes query put as argument
 
 
@@ -42,36 +50,32 @@ public class ProfileDB extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public boolean test(){
-        //Log.i(TAG, "successful");
-        Random rand = new Random();
-        int decide = rand.nextInt(1);
-        boolean test;
-        if (decide ==1) {
-             test = true;
-        }
-        else{
-             test = false;
-        }
 
-        return test;
-    }
-
-    public boolean addData (String item) {
+    public boolean addData (String firstName, String surname, String ageString, String heightString, String weightString, String gender, String activity, String gains) {
         SQLiteDatabase db = this.getWritableDatabase();
         //SQLiteDatabase db;
 
-        ContentValues contentValues = new ContentValues();
-        contentValues.put(COL_2, item);
+        age = Integer.parseInt(ageString);
+        height = Integer.parseInt(heightString);//Change string values into int before putting into db
+        weight = Integer.parseInt(weightString);
 
-        Log.i(TAG, "addData: Adding " + item + " to " + Table_Name);
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(COL_1, firstName);
+        contentValues.put(COL_2, surname);
+        contentValues.put(COL_3, age);
+        contentValues.put(COL_4, height);
+        contentValues.put(COL_5, weight);
+        contentValues.put(COL_6, gender);
+        contentValues.put(COL_7, activity);
+        contentValues.put(COL_8, gains);
+
+        Log.i(TAG, "addData: Adding " + firstName + " " + surname + " " + age + " " + height +   " to " + Table_Name);
         long result = db.insert(Table_Name, null, contentValues);
 
-//        long result= -1;
-        if (item.contains("a")){
+       /* if (firstName.contains("a")){
             result=0;
         }
-        //long result = 0;
+        */
         if (result == -1){
             return false;
         }

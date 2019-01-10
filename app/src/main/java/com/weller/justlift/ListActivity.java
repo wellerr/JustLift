@@ -10,7 +10,6 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class ListActivity extends AppCompatActivity {
 
@@ -35,7 +34,10 @@ public class ListActivity extends AppCompatActivity {
         Cursor data = myDB.getData();
         ArrayList<String> listData = new ArrayList<>();
         while (data.moveToNext()) {
-            listData.add(data.getString(1));
+          //  listData.add(data.getString(0));
+         //   listData.add(data.getString(1));
+            listData.add(data.getString(3));
+
         }
         ListAdapter adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, listData);
         listView.setAdapter(adapter);
