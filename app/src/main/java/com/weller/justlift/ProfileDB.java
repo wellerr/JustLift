@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
+import android.widget.Toast;
 
 public class ProfileDB extends SQLiteOpenHelper {
 
@@ -106,9 +107,16 @@ public class ProfileDB extends SQLiteOpenHelper {
             return true;
         }
     }
-    public Cursor getData() {
+    public Cursor getActivityData() {
         SQLiteDatabase db1 = this.getWritableDatabase();
         String query = "SELECT * FROM " + Table_1;
+        Cursor data = db1.rawQuery(query, null);
+        return data;
+    }
+
+    public Cursor getNutritionData() {
+        SQLiteDatabase db1 = this.getWritableDatabase();
+        String query = "SELECT * FROM " + Table_2;
         Cursor data = db1.rawQuery(query, null);
         return data;
     }

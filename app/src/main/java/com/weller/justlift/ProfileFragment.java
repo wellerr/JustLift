@@ -19,6 +19,7 @@ public class ProfileFragment extends Fragment implements AdapterView.OnItemSelec
 
 
     ProfileDB db;
+    String tableName = "Profile_table";
 
     TextInputEditText firstNameEditText;
     TextInputEditText surnameEditText;
