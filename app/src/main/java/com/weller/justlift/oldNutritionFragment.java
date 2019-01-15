@@ -1,13 +1,11 @@
 package com.weller.justlift;
 
-import android.app.Activity;
-import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.TextInputEditText;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,73 +18,69 @@ import java.util.ArrayList;
 
 import static com.weller.justlift.ProfileDB.TAG;
 
-public class NutritionFragment extends Fragment {
+public class oldNutritionFragment extends Fragment {
+
     NutritionData nutrition;
+    boolean test;
+    String tableName = "Nutrition_table";
     public ProfileDB db;
 
-    Button addMeal;
-    Button completeDay;
+    TextInputEditText mealEditText;
+    TextInputEditText caloriesEditText;
+    TextInputEditText proteinEditText;
 
+    Button saveButton;
+
+    String mealString;
+    String caloriesString;
+    String proteinString;
     private ListView listView;
-    private ArrayList<Integer> caloriesList;
-    private ArrayList<Integer> proteinList;
-
-    double sumCalories;
-    double sumProtein;
 
     ArrayList<NutritionData> listData = new ArrayList<>();
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_nutrition, container, false);
-        addMeal = v.findViewById(R.id.addMealButton);
-        completeDay = v.findViewById(R.id.completeButton);
+        View v = inflater.inflate(R.layout.old_fragment_nutrition, container, false);
+
+        mealEditText = v.findViewById(R.id.text_meal);
+        caloriesEditText = v.findViewById(R.id.text_calories);
+        proteinEditText = v.findViewById(R.id.text_protein);
+
+        saveButton = v.findViewById(R.id.addMealButton);
+
         db = new ProfileDB(getContext());
         listView = v.findViewById(R.id.listView);
         populateListView();
 
-        addMeal.setOnClickListener(new View.OnClickListener() {
+
+        saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getContext(), com.weller.justlift.AddMeal.class);
-                startActivityForResult(intent, 10001);
-            }
-        });
+                mealString = mealEditText.getText().toString();
+                caloriesString = caloriesEditText.getText().toString();
+                proteinString = proteinEditText.getText().toString();
 
-        completeDay.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                toastMessage("complete day selected");
+                if (mealString.length() != 0) {
+                    test = db.addMealData(mealString, caloriesString, proteinString);
+                    populateListView();
+                    if(test)
+                    {
+                        toastMessage("succesful");
+                    }
+                    else{
+                        toastMessage("failed");
+                    }
 
-                caloriesList = getColumnData(2);//populate array list with all calories input
-                sumCalories = 0;
-                for(int i = 0; i<caloriesList.size(); i++){
-                    sumCalories +=caloriesList.get(i);
                 }
-                //do something with calories sum
-
-                proteinList = getColumnData(3);//populate array list with all protein input
-                sumProtein = 0;
-                for(int i = 0; i<caloriesList.size(); i++){
-                    sumProtein += proteinList.get(i);
+                else{
+                    Toast.makeText(getContext(), "Enter text", Toast.LENGTH_LONG).show();
                 }
-                //do something with protein sum
             }
         });
 
         return v;
     }
-
-    public void onActivityResult(int requestCode, int resultCode, Intent Data){
-        super.onActivityResult(requestCode, resultCode, Data);
-        if((requestCode == 10001) && (resultCode == Activity.RESULT_OK)){
-            FragmentTransaction ft = getFragmentManager().beginTransaction();
-            ft.detach(NutritionFragment.this).attach(NutritionFragment.this).commit();
-        }
-
-    }
-
 
     private void toastMessage(String message){
         Toast.makeText(getContext(),message, Toast.LENGTH_SHORT).show();
@@ -97,7 +91,7 @@ public class NutritionFragment extends Fragment {
         Log.d(TAG, "populateListView: Displaying data in the List View.");
 
         Cursor data = db.getNutritionData();
-        listData = new ArrayList<>();
+         listData = new ArrayList<>();
 
         int col = data.getColumnCount();
         String column = Integer.toString(col);
@@ -116,12 +110,4 @@ public class NutritionFragment extends Fragment {
         }
 
     }
-
-    public ArrayList<Integer> getColumnData (int column){
-
-        ArrayList<Integer> columnData = new ArrayList<Integer>();
-        return columnData;
-    }
 }
-
-
