@@ -31,10 +31,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     new ProfileFragment()).commit();
             isFirst = false;
         }
-        getSharedPreferences("firstRun", MODE_PRIVATE).edit()
-                .putBoolean("isFirstRun", false).commit();
-
-
+    //    getSharedPreferences("firstRun", MODE_PRIVATE).edit()
+     //           .putBoolean("isFirstRun", false).commit();
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -47,10 +45,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         drawer.addDrawerListener(toggle);
         toggle.syncState();
-
-        //myDB = new ProfileDB(this);//this isn't working yet, table isnt creating
         //oncreate will open homefragment
-
     }
 
     @Override
@@ -83,9 +78,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;//once clicked, executed and then continues
 
         }
-
         drawer.closeDrawer(GravityCompat.START);//once selected, drawer closes (if not stated it remains open)
-
         return true; // selects the correct item when clicked
     }
 

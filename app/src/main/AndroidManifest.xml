@@ -18,6 +18,7 @@
         </activity>
         <activity android:name=".MainActivity" />
         <activity android:name=".AddMeal"/>
+        <activity android:name=".AddExercise"/>
         <activity android:name=".ListActivity"></activity>
     </application>
 

@@ -12,6 +12,7 @@ public class NutritionData {
         protein = proteinInput;
     }
     public String getMealName() {
+
         return meal;
     }
 

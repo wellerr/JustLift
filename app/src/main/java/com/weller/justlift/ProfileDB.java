@@ -51,6 +51,9 @@ public class ProfileDB extends SQLiteOpenHelper {
     private int calories;
     private int protein;
 
+    public static final String Table_4 = "Exercise_Table";
+    public static final String jCol_1 = "ExerciseName";
+
     public ProfileDB(Context context ) {
         super(context, DB_Name, null, 1);
     }
@@ -60,15 +63,15 @@ public class ProfileDB extends SQLiteOpenHelper {
         db.execSQL("create table " + Table_1 + " (ID INTEGER PRIMARY KEY AUTOINCREMENT,FirstName TEXT,Surname TEXT,Age INTEGER, Height INTEGER, Weight INTEGER, Gender TEXT, Activity TEXT, Gains TEXT)");
         db.execSQL("create table " + Table_2 + " (ID INTEGER PRIMARY KEY AUTOINCREMENT,MealName TEXT,Calories INTEGER,Protein INTEGER, Day INTEGER)");
         db.execSQL("create table " + Table_3 + " (ID INTEGER PRIMARY KEY AUTOINCREMENT,MealName TEXT,Calories INTEGER,Protein INTEGER, Day INTEGER)");
+        db.execSQL("create table " + Table_4 + " (ID INTEGER PRIMARY KEY AUTOINCREMENT,ExerciseName TEXT)");
     }//executes query put as argument
-
-
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS " + Table_1);
         db.execSQL("DROP TABLE IF EXISTS " + Table_2);
         db.execSQL("DROP TABLE IF EXISTS " + Table_3);
+        db.execSQL("DROP TABLE IF EXISTS " + Table_4);
         onCreate(db);
     }
 
@@ -125,6 +128,23 @@ public class ProfileDB extends SQLiteOpenHelper {
         }
     }
 
+    public boolean addExerciseData(String exercise){
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(jCol_1, exercise);
+
+        Log.i(TAG, "addExerciseData: Adding " + exercise + " " + Table_4);
+        long result = db.insert(Table_4, null, contentValues);
+
+        if (result == -1){
+            return false;
+        }
+        else{
+            return true;
+        }
+    }
+
     public int getDayCount(Context context){
         SharedPreferences sp = context.getApplicationContext().getSharedPreferences("dayCount", 0);//0 is private mode
         SharedPreferences.Editor editor = sp.edit();
@@ -156,6 +176,12 @@ public class ProfileDB extends SQLiteOpenHelper {
         SQLiteDatabase db1 = this.getWritableDatabase();
         db1.execSQL("INSERT INTO " + Table_3 + " (" +  iCol_1 + "," + iCol_2 + "," + iCol_3 + "," + iCol_4 + ") SELECT " + nCol_1 + ","+ nCol_2 + "," + nCol_3 + "," + nCol_4 +" FROM " + Table_2);
         db1.delete(Table_2, null, null);//on method run copies nutrition table to the past meals table, then deletes nutrition table
+    }
+    public Cursor getExerciseData() {
+        SQLiteDatabase db1 = this.getWritableDatabase();
+        String query = "SELECT * FROM " + Table_4;
+        Cursor data = db1.rawQuery(query, null);
+        return data;
     }
 
     public void recreateNutritionTable(){
