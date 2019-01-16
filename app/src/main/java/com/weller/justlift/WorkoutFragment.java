@@ -44,6 +44,7 @@ public class WorkoutFragment extends Fragment {
 
         db = new ProfileDB(getContext());
         listView = v.findViewById(R.id.listView);
+
         populateListView();
 
         addExercise.setOnClickListener(new View.OnClickListener() {
