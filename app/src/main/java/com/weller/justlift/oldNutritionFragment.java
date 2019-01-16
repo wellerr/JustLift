@@ -62,7 +62,7 @@ public class oldNutritionFragment extends Fragment {
                 proteinString = proteinEditText.getText().toString();
 
                 if (mealString.length() != 0) {
-                    test = db.addMealData(mealString, caloriesString, proteinString);
+                 //   test = db.addMealData(mealString, caloriesString, proteinString,);
                     populateListView();
                     if(test)
                     {

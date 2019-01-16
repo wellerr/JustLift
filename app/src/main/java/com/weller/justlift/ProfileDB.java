@@ -1,12 +1,18 @@
 package com.weller.justlift;
 
+import android.app.Activity;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.support.design.widget.TabLayout;
 import android.util.Log;
+import android.view.View;
 import android.widget.Toast;
+
+import java.util.ArrayList;
 
 public class ProfileDB extends SQLiteOpenHelper {
 
@@ -33,6 +39,14 @@ public class ProfileDB extends SQLiteOpenHelper {
     public static final String nCol_1 = "MealName";
     public static final String nCol_2 = "Calories";
     public static final String nCol_3 = "Protein";
+    public static final String nCol_4 = "Day";
+
+
+    public static final String Table_3 = "Past_meals";
+    public static final String iCol_1 = "MealName";
+    public static final String iCol_2 = "Calories";
+    public static final String iCol_3 = "Protein";
+    public static final String iCol_4 = "Day";
 
     private int calories;
     private int protein;
@@ -44,7 +58,8 @@ public class ProfileDB extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("create table " + Table_1 + " (ID INTEGER PRIMARY KEY AUTOINCREMENT,FirstName TEXT,Surname TEXT,Age INTEGER, Height INTEGER, Weight INTEGER, Gender TEXT, Activity TEXT, Gains TEXT)");
-        db.execSQL("create table " + Table_2 + " (ID INTEGER PRIMARY KEY AUTOINCREMENT,MealName TEXT,Calories INTEGER,Protein INTEGER)");
+        db.execSQL("create table " + Table_2 + " (ID INTEGER PRIMARY KEY AUTOINCREMENT,MealName TEXT,Calories INTEGER,Protein INTEGER, Day INTEGER)");
+        db.execSQL("create table " + Table_3 + " (ID INTEGER PRIMARY KEY AUTOINCREMENT,MealName TEXT,Calories INTEGER,Protein INTEGER, Day INTEGER)");
     }//executes query put as argument
 
 
@@ -53,6 +68,7 @@ public class ProfileDB extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS " + Table_1);
         db.execSQL("DROP TABLE IF EXISTS " + Table_2);
+        db.execSQL("DROP TABLE IF EXISTS " + Table_3);
         onCreate(db);
     }
 
@@ -86,7 +102,7 @@ public class ProfileDB extends SQLiteOpenHelper {
 
     }
 
-    public boolean addMealData(String meal, String caloriesString, String proteinString){
+    public boolean addMealData(String meal, String caloriesString, String proteinString, int dayCount){
         SQLiteDatabase db = this.getWritableDatabase();
 
         calories = Integer.parseInt(caloriesString);
@@ -96,8 +112,9 @@ public class ProfileDB extends SQLiteOpenHelper {
         contentValues.put(nCol_1, meal);
         contentValues.put(nCol_2, calories);
         contentValues.put(nCol_3, protein);
+        contentValues.put(nCol_4, dayCount);
 
-        Log.i(TAG, "addProfileData: Adding " + meal + " " + caloriesString + " " + proteinString  + " to " + Table_2);
+        Log.i(TAG, "addProfileData: Adding " + meal + " " + caloriesString + " " + proteinString  + " " + dayCount + " to " + Table_2);
         long result = db.insert(Table_2, null, contentValues);
 
         if (result == -1){
@@ -107,18 +124,43 @@ public class ProfileDB extends SQLiteOpenHelper {
             return true;
         }
     }
-    public Cursor getActivityData() {
+
+    public int getDayCount(Context context){
+        SharedPreferences sp = context.getApplicationContext().getSharedPreferences("dayCount", 0);//0 is private mode
+        SharedPreferences.Editor editor = sp.edit();
+        int dayCount =sp.getInt("dayCount", 0);// gets int stored for day count
+        return dayCount;
+    }
+
+    public void updateDayCount(Context context, int count){
+        SharedPreferences sp = context.getApplicationContext().getSharedPreferences("dayCount", 0);//0 is private mode
+        SharedPreferences.Editor editor = sp.edit();
+        editor.putInt("dayCount", count);
+        editor.commit();
+    }
+
+    public Cursor getProfileData() {
         SQLiteDatabase db1 = this.getWritableDatabase();
         String query = "SELECT * FROM " + Table_1;
         Cursor data = db1.rawQuery(query, null);
         return data;
     }
-
     public Cursor getNutritionData() {
         SQLiteDatabase db1 = this.getWritableDatabase();
         String query = "SELECT * FROM " + Table_2;
         Cursor data = db1.rawQuery(query, null);
         return data;
+    }
+    public void deleteNutritionData(int dayCount){
+        Log.d(TAG, "day count " + dayCount);
+        SQLiteDatabase db1 = this.getWritableDatabase();
+        db1.execSQL("INSERT INTO " + Table_3 + " (" +  iCol_1 + "," + iCol_2 + "," + iCol_3 + "," + iCol_4 + ") SELECT " + nCol_1 + ","+ nCol_2 + "," + nCol_3 + "," + nCol_4 +" FROM " + Table_2);
+        db1.delete(Table_2, null, null);//on method run copies nutrition table to the past meals table, then deletes nutrition table
+    }
+
+    public void recreateNutritionTable(){
+        SQLiteDatabase db1 = this.getWritableDatabase();
+        db1.execSQL("create table " + Table_2 + " (ID INTEGER PRIMARY KEY AUTOINCREMENT,MealName TEXT,Calories INTEGER,Protein INTEGER)");
     }
 
 }

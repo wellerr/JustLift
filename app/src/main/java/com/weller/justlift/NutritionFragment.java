@@ -28,11 +28,10 @@ public class NutritionFragment extends Fragment {
     Button completeDay;
 
     private ListView listView;
-    private ArrayList<Integer> caloriesList;
-    private ArrayList<Integer> proteinList;
+    private ArrayList<String> caloriesList;
+    private ArrayList<String> proteinList;
 
-    double sumCalories;
-    double sumProtein;
+    public int dayCount;
 
     ArrayList<NutritionData> listData = new ArrayList<>();
 
@@ -60,34 +59,43 @@ public class NutritionFragment extends Fragment {
                 toastMessage("complete day selected");
 
                 caloriesList = getColumnData(2);//populate array list with all calories input
-                sumCalories = 0;
+                int sumCalories = 0;
                 for(int i = 0; i<caloriesList.size(); i++){
-                    sumCalories +=caloriesList.get(i);
+//                    sumCalories += Integer.parseInt(caloriesList.get(i));         this needs work
                 }
+                Log.d(TAG, "summing calories... total calories for today = " + sumCalories);
                 //do something with calories sum
 
                 proteinList = getColumnData(3);//populate array list with all protein input
-                sumProtein = 0;
+                int sumProtein = 0;
                 for(int i = 0; i<caloriesList.size(); i++){
-                    sumProtein += proteinList.get(i);
+//                    sumProtein += Integer.parseInt(proteinList.get(i));           needs work
                 }
+                Log.d(TAG, "total protein for today = " + sumProtein);
                 //do something with protein sum
+
+               completeDayFunction();
+                reloadFragment();
             }
         });
 
         return v;
     }
 
-    public void onActivityResult(int requestCode, int resultCode, Intent Data){
+    public void onActivityResult(int requestCode, int resultCode, Intent Data){//once add meal has finished...
         super.onActivityResult(requestCode, resultCode, Data);
-        if((requestCode == 10001) && (resultCode == Activity.RESULT_OK)){
-            FragmentTransaction ft = getFragmentManager().beginTransaction();
-            ft.detach(NutritionFragment.this).attach(NutritionFragment.this).commit();
+        if((requestCode == 10001) && (resultCode == Activity.RESULT_OK)){//if request id's match and result ok returned
+           reloadFragment();
         }
 
     }
 
-
+    public void completeDayFunction(){ //code that completes day of nutrition for the user
+        dayCount = db.getDayCount(getContext());
+        dayCount++;//increments days
+        db.updateDayCount(getContext(), dayCount);//updates shared prefs with new amount of days
+        db.deleteNutritionData(dayCount);//deletes nutrition data, adds nutrition data to the past meals table with the day count as a column
+    }
     private void toastMessage(String message){
         Toast.makeText(getContext(),message, Toast.LENGTH_SHORT).show();
     }
@@ -112,14 +120,24 @@ public class NutritionFragment extends Fragment {
             NutritionAdapter adapter = new NutritionAdapter(getContext(), R.layout.adapter_view, listData);//puts 3 variables into adapter
             listView.setAdapter(adapter);//views the new table (on screen this shows up as a new row)
             i++;//increments i so next row is done next
-
         }
-
     }
 
-    public ArrayList<Integer> getColumnData (int column){
+    public void reloadFragment(){
+        FragmentTransaction ft = getFragmentManager().beginTransaction();
+        ft.detach(NutritionFragment.this).attach(NutritionFragment.this).commit();//re-loads the fragment
+    }
 
-        ArrayList<Integer> columnData = new ArrayList<Integer>();
+    public ArrayList<String> getColumnData (int column){
+
+        ArrayList columnData = new ArrayList<Integer>();
+        Cursor data = db.getNutritionData();
+        int i=0;
+        while (data.moveToNext()) {
+            columnData.add(data.getString(i));
+            i++;
+
+        }
         return columnData;
     }
 }

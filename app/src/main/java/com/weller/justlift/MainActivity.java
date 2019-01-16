@@ -85,6 +85,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
     }
 
+    public void isProfile(){
+
+    }
+
 /*    @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         String text = parent.getItemAtPosition(position).toString();

@@ -13,12 +13,6 @@
         android:layout_height="wrap_content"
         app:errorEnabled="true">
 
-        <android.support.design.widget.TextInputEditText
-            android:id="@+id/text_meal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Name of Meal"
-            android:inputType="text" />
     </android.support.design.widget.TextInputLayout>
 
 
@@ -28,12 +22,6 @@
         android:layout_height="wrap_content"
         app:errorEnabled="true">
 
-        <android.support.design.widget.TextInputEditText
-            android:id="@+id/text_calories"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Calories"
-            android:inputType="number" />
     </android.support.design.widget.TextInputLayout>
 
     <android.support.design.widget.TextInputLayout
@@ -42,24 +30,17 @@
         android:layout_height="wrap_content"
         app:errorEnabled="true">
 
-        <android.support.design.widget.TextInputEditText
-            android:id="@+id/text_protein"
+        <Button
+            android:id="@+id/addMealButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Protein (g)"
-            android:inputType="number" />
+            android:layout_weight="1"
+            android:text="Add Meal" />
     </android.support.design.widget.TextInputLayout>
-
-    <Button
-        android:id="@+id/addMealButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:onClick="onClick"
-        android:text="Add Meal" />
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="319dp"
         android:orientation="vertical">
 
         <ListView
@@ -69,5 +50,67 @@
             android:scrollbars="vertical" />
 
     </LinearLayout>
+
+    <TableLayout
+        android:layout_width="wrap_content"
+        android:layout_height="126dp"
+        android:layout_gravity="right">
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_gravity="center_horizontal"
+                android:text="Total Calories"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:layout_gravity="center_horizontal"
+                android:text="Total Protein"
+                android:textStyle="bold"
+                />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView android:text="Calories Not Set" />
+
+            <TextView android:text="Protein Not Set" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_gravity="center_horizontal"
+                android:text="Calories Remaining"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:layout_gravity="center_horizontal"
+                android:text="Protein Remaining"
+                android:textStyle="bold"
+                />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView android:text="Calories Not Set" />
+
+            <TextView android:text="Protein Not Set" />
+        </TableRow>
+    </TableLayout>
+
+    <Button
+        android:id="@+id/completeButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Complete Day" />
 
 </LinearLayout>

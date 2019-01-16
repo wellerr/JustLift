@@ -31,7 +31,7 @@ public class ListActivity extends AppCompatActivity {
     public void populateListView() {
         Log.d(TAG, "populateListView: Displaying data in the List View.");
 
-        Cursor data = myDB.getActivityData();
+        Cursor data = myDB.getProfileData();
         ArrayList<String> listData = new ArrayList<>();
         int col = data.getColumnCount();
         String column = Integer.toString(col);
