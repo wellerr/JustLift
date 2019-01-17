@@ -17,7 +17,7 @@
             android:id="@+id/text_exercise"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Name of Meal"
+            android:hint="Name of Exercise"
             android:inputType="text" />
     </android.support.design.widget.TextInputLayout>
 

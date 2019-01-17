@@ -119,33 +119,14 @@ public class NutritionFragment extends Fragment {
             i++;//increments i so next row is done next
         }
     }
-
-    public void reloadFragment(){
-        FragmentTransaction ft = getFragmentManager().beginTransaction();
-        ft.detach(NutritionFragment.this).attach(NutritionFragment.this).commit();//re-loads the fragment
-
-    }
-
-    public ArrayList<String> getColumnData (int column){
-
-        ArrayList columnData = new ArrayList<Integer>();
-        Cursor data = db.getNutritionData();
-        int i=0;
-        while (data.moveToNext()) {
-            columnData.add(data.getString(i));
-            i++;
-
-        }
-        return columnData;
-    }
     public void totalCalories(){
         Cursor data = db.getCaloriesData();
-        int totalCalories =0;
-        while (data.moveToNext()){
+        int totalCalories =0;//sets initial total to 0
+        while (data.moveToNext()){//iterates through calories data
             totalCalories += data.getInt(0);//gets column 0 (first column) moves to next record and adds to total
         }
         Log.d(TAG, "total calories is ..." + totalCalories);
-        setCalories.setText(Integer.toString(totalCalories));
+        setCalories.setText(Integer.toString(totalCalories));//sets textview to the total calculated
     }
 
     public void totalProtein(){
@@ -157,6 +138,13 @@ public class NutritionFragment extends Fragment {
         Log.d(TAG, "total protein is ..." + totalProtein);
         setProtein.setText(Integer.toString(totalProtein));
     }
+
+    public void reloadFragment(){
+        FragmentTransaction ft = getFragmentManager().beginTransaction();
+        ft.detach(NutritionFragment.this).attach(NutritionFragment.this).commit();//re-loads the fragment
+
+    }
+
 }
 
 
