@@ -94,8 +94,9 @@ public class ProfileFragment extends Fragment implements AdapterView.OnItemSelec
                 genderString = spinner_gender.getSelectedItem().toString();
                 activityString = spinner_activity.getSelectedItem().toString();
                 gainsString = spinner_gains.getSelectedItem().toString();
-                if(firstNameString.length()!=0){
-                   AddData(firstNameString, surnameString, ageString, heightString, weightString, genderString, activityString, gainsString); //
+                if(firstNameString.length()!=0 && surnameString.length()!=0 && ageString.length()!=0 && heightString.length()!=0 &&
+                        weightString.length()!=0 && genderString.length()!=0 && activityString.length()!=0 && gainsString.length()!=0){//checks if all fields have been entered
+                   AddData(firstNameString, surnameString, ageString, heightString, weightString, genderString, activityString, gainsString); //adds fields to database
                 }
                 else{
                     toastMessage("Enter data");

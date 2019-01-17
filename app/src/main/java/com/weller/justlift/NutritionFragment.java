@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -33,6 +34,11 @@ public class NutritionFragment extends Fragment {
 
     public int dayCount;
 
+    TextView setCalories;
+    TextView setProtein;
+    TextView setRemainingCalories;
+    TextView getSetRemainingProtein;
+
     ArrayList<NutritionData> listData = new ArrayList<>();
 
     @Nullable
@@ -43,7 +49,12 @@ public class NutritionFragment extends Fragment {
         completeDay = v.findViewById(R.id.completeButton);
         db = new ProfileDB(getContext());
         listView = v.findViewById(R.id.listView);
+        setCalories = v.findViewById(R.id.setCalories);
+        setProtein = v.findViewById(R.id.setProtein);
         populateListView();
+        totalCalories();
+        totalProtein();
+
 
         addMeal.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -56,23 +67,7 @@ public class NutritionFragment extends Fragment {
         completeDay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                toastMessage("complete day selected");
 
-                caloriesList = getColumnData(2);//populate array list with all calories input
-                int sumCalories = 0;
-                for(int i = 0; i<caloriesList.size(); i++){
-//                    sumCalories += Integer.parseInt(caloriesList.get(i));         this needs work
-                }
-                Log.d(TAG, "summing calories... total calories for today = " + sumCalories);
-                //do something with calories sum
-
-                proteinList = getColumnData(3);//populate array list with all protein input
-                int sumProtein = 0;
-                for(int i = 0; i<caloriesList.size(); i++){
-//                    sumProtein += Integer.parseInt(proteinList.get(i));           needs work
-                }
-                Log.d(TAG, "total protein for today = " + sumProtein);
-                //do something with protein sum
 
                completeDayFunction();
                 reloadFragment();
@@ -85,7 +80,10 @@ public class NutritionFragment extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, Intent Data){//once add meal has finished...
         super.onActivityResult(requestCode, resultCode, Data);
         if((requestCode == 10001) && (resultCode == Activity.RESULT_OK)){//if request id's match and result ok returned
+
+
            reloadFragment();
+
         }
 
     }
@@ -101,7 +99,6 @@ public class NutritionFragment extends Fragment {
     }
 
     public void populateListView() {
-
         Log.d(TAG, "populateListView: Displaying data in the List View.");
 
         Cursor data = db.getNutritionData();
@@ -126,6 +123,7 @@ public class NutritionFragment extends Fragment {
     public void reloadFragment(){
         FragmentTransaction ft = getFragmentManager().beginTransaction();
         ft.detach(NutritionFragment.this).attach(NutritionFragment.this).commit();//re-loads the fragment
+
     }
 
     public ArrayList<String> getColumnData (int column){
@@ -139,6 +137,25 @@ public class NutritionFragment extends Fragment {
 
         }
         return columnData;
+    }
+    public void totalCalories(){
+        Cursor data = db.getCaloriesData();
+        int totalCalories =0;
+        while (data.moveToNext()){
+            totalCalories += data.getInt(0);//gets column 0 (first column) moves to next record and adds to total
+        }
+        Log.d(TAG, "total calories is ..." + totalCalories);
+        setCalories.setText(Integer.toString(totalCalories));
+    }
+
+    public void totalProtein(){
+        Cursor data = db.getProteinData();
+        int totalProtein =0;
+        while (data.moveToNext()){
+            totalProtein += data.getInt(0);//gets column 0 (first column) moves to next record and adds to total
+        }
+        Log.d(TAG, "total protein is ..." + totalProtein);
+        setProtein.setText(Integer.toString(totalProtein));
     }
 }
 

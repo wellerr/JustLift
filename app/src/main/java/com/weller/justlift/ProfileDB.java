@@ -177,6 +177,20 @@ public class ProfileDB extends SQLiteOpenHelper {
         db1.execSQL("INSERT INTO " + Table_3 + " (" +  iCol_1 + "," + iCol_2 + "," + iCol_3 + "," + iCol_4 + ") SELECT " + nCol_1 + ","+ nCol_2 + "," + nCol_3 + "," + nCol_4 +" FROM " + Table_2);
         db1.delete(Table_2, null, null);//on method run copies nutrition table to the past meals table, then deletes nutrition table
     }
+
+    public Cursor getCaloriesData(){
+        SQLiteDatabase db1 = this.getWritableDatabase();
+        String query = "SELECT " + iCol_2 + " FROM " + Table_2;
+        Cursor data = db1.rawQuery(query, null);
+        return data;
+    }
+
+    public Cursor getProteinData(){
+        SQLiteDatabase db1 = this.getWritableDatabase();
+        String query = "SELECT " + iCol_3 + " FROM " + Table_2;
+        Cursor data = db1.rawQuery(query, null);
+        return data;
+    }
     public Cursor getExerciseData() {
         SQLiteDatabase db1 = this.getWritableDatabase();
         String query = "SELECT * FROM " + Table_4;

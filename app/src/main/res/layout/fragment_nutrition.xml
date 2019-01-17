@@ -76,9 +76,13 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <TextView android:text="Calories Not Set" />
+            <TextView
+                android:id="@+id/setCalories"
+                android:text="Calories Not Set" />
 
-            <TextView android:text="Protein Not Set" />
+            <TextView
+                android:id="@+id/setProtein"
+                android:text="Protein Not Set" />
         </TableRow>
 
         <TableRow
@@ -101,9 +105,13 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <TextView android:text="Calories Not Set" />
+            <TextView
+                android:id="@+id/setRemainingCalories"
+                android:text="Calories Not Set" />
 
-            <TextView android:text="Protein Not Set" />
+            <TextView
+                android:id="@+id/setRemainingProtein"
+                android:text="Protein Not Set" />
         </TableRow>
     </TableLayout>
 
