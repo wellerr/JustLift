@@ -36,7 +36,7 @@ public class AddExerciseWeight extends AppCompatActivity {
         addWeight = findViewById(R.id.recordWeightButton);
         exerciseWeightEditText = findViewById(R.id.text_exercise);
         final int posValue = getIntent().getIntExtra("pos", 0); //gets position of the listview starting from 0
-        toastMessage(Integer.toString(posValue));
+        toastMessage(Integer.toString(posValue));//previews the list item selected
         db = new ProfileDB(getApplicationContext());
 
         addWeight.setOnClickListener(new View.OnClickListener() {

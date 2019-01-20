@@ -17,6 +17,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -51,8 +52,14 @@ public class WorkoutFragment extends Fragment {
         addExercise.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getContext(), com.weller.justlift.AddExercise.class);
-                startActivityForResult(intent, 10001);
+                int listCount = listView.getCount();
+                if (listCount <= 4) { //max number of entries -1 (listview count starts at 0)
+                    Intent intent = new Intent(getContext(), com.weller.justlift.AddExercise.class);
+                    startActivityForResult(intent, 10001);
+                }
+                else{
+                    Toast.makeText(getContext(), "max number of exercises", Toast.LENGTH_LONG);
+                }
             }
         });
 
