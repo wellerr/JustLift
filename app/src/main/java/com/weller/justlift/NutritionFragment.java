@@ -67,8 +67,6 @@ public class NutritionFragment extends Fragment {
         completeDay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-
                completeDayFunction();
                 reloadFragment();
             }

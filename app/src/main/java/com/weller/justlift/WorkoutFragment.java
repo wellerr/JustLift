@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListAdapter;
@@ -52,6 +53,15 @@ public class WorkoutFragment extends Fragment {
             public void onClick(View v) {
                 Intent intent = new Intent(getContext(), com.weller.justlift.AddExercise.class);
                 startActivityForResult(intent, 10001);
+            }
+        });
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(view.getContext(),AddExerciseWeight.class);
+                intent.putExtra("pos", position);
+                startActivityForResult(intent,10001);
             }
         });
         return v;

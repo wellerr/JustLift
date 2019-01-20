@@ -54,6 +54,15 @@ public class ProfileDB extends SQLiteOpenHelper {
     public static final String Table_4 = "Exercise_Table";
     public static final String jCol_1 = "ExerciseName";
 
+    public static final String ExerciseTable_1 = "Exercise_Table1";
+    public static final String ExerciseTable_2 = "Exercise_Table2";
+    public static final String ExerciseTable_3 = "Exercise_Table3";
+    public static final String ExerciseTable_4 = "Exercise_Table4";
+    public static final String ExerciseTable_5 = "Exercise_Table5";
+
+    public static final String kCol_1 = "Weight";
+    public static final String kCol_2 = "Day ";
+
     public ProfileDB(Context context ) {
         super(context, DB_Name, null, 1);
     }
@@ -64,6 +73,11 @@ public class ProfileDB extends SQLiteOpenHelper {
         db.execSQL("create table " + Table_2 + " (ID INTEGER PRIMARY KEY AUTOINCREMENT,MealName TEXT,Calories INTEGER,Protein INTEGER, Day INTEGER)");
         db.execSQL("create table " + Table_3 + " (ID INTEGER PRIMARY KEY AUTOINCREMENT,MealName TEXT,Calories INTEGER,Protein INTEGER, Day INTEGER)");
         db.execSQL("create table " + Table_4 + " (ID INTEGER PRIMARY KEY AUTOINCREMENT,ExerciseName TEXT)");
+        db.execSQL("create table " + ExerciseTable_1 + " (ID INTEGER PRIMARY KEY AUTOINCREMENT,Weight INTEGER, DAY INTEGER)");
+        db.execSQL("create table " + ExerciseTable_2 + " (ID INTEGER PRIMARY KEY AUTOINCREMENT,Weight INTEGER, DAY INTEGER)");//setting up 5 exercise tables will increase later in development
+        db.execSQL("create table " + ExerciseTable_3 + " (ID INTEGER PRIMARY KEY AUTOINCREMENT,Weight INTEGER, DAY INTEGER)");
+        db.execSQL("create table " + ExerciseTable_4 + " (ID INTEGER PRIMARY KEY AUTOINCREMENT,Weight INTEGER, DAY INTEGER)");
+        db.execSQL("create table " + ExerciseTable_5 + " (ID INTEGER PRIMARY KEY AUTOINCREMENT,Weight INTEGER, DAY INTEGER)");
     }//executes query put as argument
 
     @Override
@@ -144,6 +158,23 @@ public class ProfileDB extends SQLiteOpenHelper {
             return true;
         }
     }
+    public boolean addExerciseWeight(String tableName, int exerciseWeight, int dayCount){
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(kCol_1, exerciseWeight);
+        contentValues.put(kCol_2, dayCount);
+
+        Log.i(TAG, "addExerciseData: Adding " + exerciseWeight + " " + tableName);
+        long result = db.insert(tableName, null, contentValues);
+
+        if (result == -1){
+            return false;
+        }
+        else{
+            return true;
+        }
+            }
 
     public int getDayCount(Context context){
         SharedPreferences sp = context.getApplicationContext().getSharedPreferences("dayCount", 0);//0 is private mode
