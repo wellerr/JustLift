@@ -103,7 +103,6 @@ public class ProfileFragment extends Fragment implements AdapterView.OnItemSelec
                 }
             }
         });
-
         viewButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

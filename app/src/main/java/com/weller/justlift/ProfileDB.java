@@ -202,6 +202,14 @@ public class ProfileDB extends SQLiteOpenHelper {
         Cursor data = db1.rawQuery(query, null);
         return data;
     }
+
+    public Cursor getNutritionProfile(){
+        SQLiteDatabase db1 = this.getWritableDatabase();
+        String query = "SELECT " + COL_3 + "," + COL_4 + "," + COL_5 + "," + COL_6 + "," + COL_7 + "," + COL_8 + " FROM " + Table_1;
+        Cursor data = db1.rawQuery(query, null);
+        return data;
+    }
+
     public void deleteNutritionData(int dayCount){
         Log.d(TAG, "day count " + dayCount);
         SQLiteDatabase db1 = this.getWritableDatabase();

@@ -51,9 +51,15 @@ public class NutritionFragment extends Fragment {
         listView = v.findViewById(R.id.listView);
         setCalories = v.findViewById(R.id.setCalories);
         setProtein = v.findViewById(R.id.setProtein);
+        setRemainingCalories = v.findViewById(R.id.setRemainingCalories);
         populateListView();
-        totalCalories();
-        totalProtein();
+
+        double totalCalories = totalCalories();
+        setCalories.setText(Double.toString(totalCalories));//sets textview to the total calculated
+
+        double totalProtein = totalProtein();
+        setProtein.setText(Double.toString(totalProtein));
+        profileData(totalCalories, totalProtein);
 
 
         addMeal.setOnClickListener(new View.OnClickListener() {
@@ -78,10 +84,7 @@ public class NutritionFragment extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, Intent Data){//once add meal has finished...
         super.onActivityResult(requestCode, resultCode, Data);
         if((requestCode == 10001) && (resultCode == Activity.RESULT_OK)){//if request id's match and result ok returned
-
-
            reloadFragment();
-
         }
 
     }
@@ -117,24 +120,26 @@ public class NutritionFragment extends Fragment {
             i++;//increments i so next row is done next
         }
     }
-    public void totalCalories(){
+    public int totalCalories(){
         Cursor data = db.getCaloriesData();
         int totalCalories =0;//sets initial total to 0
         while (data.moveToNext()){//iterates through calories data
             totalCalories += data.getInt(0);//gets column 0 (first column) moves to next record and adds to total
         }
         Log.d(TAG, "total calories is ..." + totalCalories);
-        setCalories.setText(Integer.toString(totalCalories));//sets textview to the total calculated
+      //  setCalories.setText(Integer.toString(totalCalories));//sets textview to the total calculated
+        return totalCalories;
     }
 
-    public void totalProtein(){
+    public int totalProtein(){
         Cursor data = db.getProteinData();
         int totalProtein =0;
         while (data.moveToNext()){
             totalProtein += data.getInt(0);//gets column 0 (first column) moves to next record and adds to total
         }
         Log.d(TAG, "total protein is ..." + totalProtein);
-        setProtein.setText(Integer.toString(totalProtein));
+        //setProtein.setText(Integer.toString(totalProtein));
+        return  totalProtein;
     }
 
     public void reloadFragment(){
@@ -142,6 +147,92 @@ public class NutritionFragment extends Fragment {
         ft.detach(NutritionFragment.this).attach(NutritionFragment.this).commit();//re-loads the fragment
 
     }
+    public void profileData(double remainingCalories, double remainingProtein){
+        Cursor data = db.getNutritionProfile();//gets correct columns for the nutrition calculation on this fragment
+        int col = data.getColumnCount();
+        //Log.d(TAG, Integer.toString(data.getColumnCount()));
+        ArrayList<String> arr = new ArrayList<>();
+
+        while(data.moveToNext()){
+
+            int index = data.getColumnIndexOrThrow("Age");
+            String age = Integer.toString(data.getInt(index));
+            arr.add(age);
+
+            index = data.getColumnIndexOrThrow("Height");
+            String height = Integer.toString(data.getInt(index));
+            arr.add(height);
+
+            index = data.getColumnIndexOrThrow("Weight");
+            String weight = Integer.toString(data.getInt(index));
+            arr.add(weight);
+
+            index = data.getColumnIndexOrThrow("Gender");
+            String gender = data.getString(index);
+            arr.add(gender);
+
+            index = data.getColumnIndexOrThrow("Activity");
+            String activity = data.getString(index);
+            arr.add(activity);
+
+            index = data.getColumnIndexOrThrow("Gains");
+            String gains = data.getString(index);
+            arr.add(gains);
+        }
+        for(int i =0; i<arr.size(); i++){//iterates through arr to check values have been added correctly
+            String test = arr.get(i);
+            Log.i(TAG, test);
+        }
+       calculateCaloriesLeft(arr, remainingCalories);
+    }
+
+    public  void calculateCaloriesLeft (ArrayList<String> profile, double remainingCalories){
+        int age = Integer.parseInt(profile.get(0));
+        int height = Integer.parseInt(profile.get(1));
+        int weight = Integer.parseInt(profile.get(2));
+        String gender = profile.get(3);//gets data for each section
+        String activity = profile.get(4);
+        String gains = profile.get(5);
+        double caloriesLeft;
+        if(gender.contains("male")){
+            caloriesLeft = ((10 * weight) + (6.25 * height) - (5 * age) + 5);//male mifflin st jeor equation
+        }
+        else{
+            caloriesLeft = ((10 * weight) + (6.25 * height) - (5 * age) - 161);//female mifflin st jeor
+        }
+
+        if(activity.contains("Sedentary")){//adds activity factor
+            caloriesLeft = caloriesLeft * 1.2;
+        }
+        else if(activity.contains("Lightly Active")){
+            caloriesLeft = caloriesLeft * 1.375;
+        }
+        else if(activity.contains("Moderately Active")){
+            caloriesLeft = caloriesLeft * 1.550;
+        }
+        else if(activity.contains("Very Active")){
+            caloriesLeft = caloriesLeft * 1.725;
+        }
+        else if(activity.contains("Extremely Active")){
+            caloriesLeft = caloriesLeft * 1.9;
+        }
+
+        if(gains.contains("Slow Gains")){
+            caloriesLeft = caloriesLeft + 250;
+        }
+        else if(gains.contains("Standards Gains")){
+            caloriesLeft = caloriesLeft + 500;
+        }
+        else if(gains.contains("Faster Gains")){
+            caloriesLeft = caloriesLeft + 750;
+        }
+        else if(gains.contains("Extreme Gains")){
+            caloriesLeft = caloriesLeft + 1000;
+        }
+        setRemainingCalories.setText(Double.toString(caloriesLeft - remainingCalories));
+    }
+
+
 
 }
 
