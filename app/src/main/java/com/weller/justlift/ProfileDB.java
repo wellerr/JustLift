@@ -92,8 +92,14 @@ public class ProfileDB extends SQLiteOpenHelper {
 
     public boolean addProfileData(String firstName, String surname, String ageString, String heightString, String weightString, String gender, String activity, String gains) {
         SQLiteDatabase db = this.getWritableDatabase();
-
-        age = Integer.parseInt(ageString);
+        String count = "SELECT count(*) FROM " + Table_1;
+        Cursor cursor = db.rawQuery(count, null);
+        cursor.moveToFirst();
+        int icount = cursor.getInt(0);//checks if table has records
+        if(icount>0){
+            deleteProfileData();//if table has records delete, then begin the add process
+        }
+        age = Integer.parseInt(ageString);//
         height = Integer.parseInt(heightString);//Change string values into int before putting into db
         weight = Integer.parseInt(weightString);
 
@@ -215,6 +221,11 @@ public class ProfileDB extends SQLiteOpenHelper {
         SQLiteDatabase db1 = this.getWritableDatabase();
         db1.execSQL("INSERT INTO " + Table_3 + " (" +  iCol_1 + "," + iCol_2 + "," + iCol_3 + "," + iCol_4 + ") SELECT " + nCol_1 + ","+ nCol_2 + "," + nCol_3 + "," + nCol_4 +" FROM " + Table_2);
         db1.delete(Table_2, null, null);//on method run copies nutrition table to the past meals table, then deletes nutrition table
+    }
+    public void deleteProfileData(){
+        Log.d(TAG, "deleting profile data");
+        SQLiteDatabase db1 = this.getWritableDatabase();
+        db1.delete(Table_1, null, null);//on method run copies nutrition table to the past meals table, then deletes nutrition table
     }
 
     public Cursor getCaloriesData(){

@@ -29,7 +29,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             //startActivity(new Intent(MainActivity.this, NutritionFragment.class));
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                     new ProfileFragment()).commit();
-            isFirst = false;
+            isFirst = false;//next time app is run this if will pass false
+        }
+        else{
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                    new NutritionFragment()).commit();
         }
     //    getSharedPreferences("firstRun", MODE_PRIVATE).edit()
      //           .putBoolean("isFirstRun", false).commit();
