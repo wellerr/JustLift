@@ -150,40 +150,41 @@ public class NutritionFragment extends Fragment {
     public void profileData(double remainingCalories, double remainingProtein){
         Cursor data = db.getNutritionProfile();//gets correct columns for the nutrition calculation on this fragment
         int col = data.getColumnCount();
-        //Log.d(TAG, Integer.toString(data.getColumnCount()));
-        ArrayList<String> arr = new ArrayList<>();
+            //Log.d(TAG, Integer.toString(data.getColumnCount()));
+        if(data.getCount()!=0) {
+            ArrayList<String> arr = new ArrayList<>();
+            while (data.moveToNext()) {
 
-        while(data.moveToNext()){
+                int index = data.getColumnIndexOrThrow("Age");
+                String age = Integer.toString(data.getInt(index));
+                arr.add(age);
 
-            int index = data.getColumnIndexOrThrow("Age");
-            String age = Integer.toString(data.getInt(index));
-            arr.add(age);
+                index = data.getColumnIndexOrThrow("Height");
+                String height = Integer.toString(data.getInt(index));
+                arr.add(height);
 
-            index = data.getColumnIndexOrThrow("Height");
-            String height = Integer.toString(data.getInt(index));
-            arr.add(height);
+                index = data.getColumnIndexOrThrow("Weight");
+                String weight = Integer.toString(data.getInt(index));
+                arr.add(weight);
 
-            index = data.getColumnIndexOrThrow("Weight");
-            String weight = Integer.toString(data.getInt(index));
-            arr.add(weight);
+                index = data.getColumnIndexOrThrow("Gender");
+                String gender = data.getString(index);
+                arr.add(gender);
 
-            index = data.getColumnIndexOrThrow("Gender");
-            String gender = data.getString(index);
-            arr.add(gender);
+                index = data.getColumnIndexOrThrow("Activity");
+                String activity = data.getString(index);
+                arr.add(activity);
 
-            index = data.getColumnIndexOrThrow("Activity");
-            String activity = data.getString(index);
-            arr.add(activity);
-
-            index = data.getColumnIndexOrThrow("Gains");
-            String gains = data.getString(index);
-            arr.add(gains);
+                index = data.getColumnIndexOrThrow("Gains");
+                String gains = data.getString(index);
+                arr.add(gains);
+            }
+            for (int i = 0; i < arr.size(); i++) {//iterates through arr to check values have been added correctly
+                String test = arr.get(i);
+                Log.i(TAG, test);
+            }
+            calculateCaloriesLeft(arr, remainingCalories);
         }
-        for(int i =0; i<arr.size(); i++){//iterates through arr to check values have been added correctly
-            String test = arr.get(i);
-            Log.i(TAG, test);
-        }
-       calculateCaloriesLeft(arr, remainingCalories);
     }
 
     public  void calculateCaloriesLeft (ArrayList<String> profile, double remainingCalories){

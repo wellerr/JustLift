@@ -63,6 +63,10 @@ public class ProfileDB extends SQLiteOpenHelper {
     public static final String kCol_1 = "Weight";
     public static final String kCol_2 = "Day ";
 
+    public static final String Table_5 = "Calorie_Calc";
+    public static final String lCol_1 = "WeeklyCalories";
+    public static final String lCol_2 = "WeeklyWeight";
+
     public ProfileDB(Context context ) {
         super(context, DB_Name, null, 1);
     }
@@ -73,6 +77,7 @@ public class ProfileDB extends SQLiteOpenHelper {
         db.execSQL("create table " + Table_2 + " (ID INTEGER PRIMARY KEY AUTOINCREMENT,MealName TEXT,Calories INTEGER,Protein INTEGER, Day INTEGER)");
         db.execSQL("create table " + Table_3 + " (ID INTEGER PRIMARY KEY AUTOINCREMENT,MealName TEXT,Calories INTEGER,Protein INTEGER, Day INTEGER)");
         db.execSQL("create table " + Table_4 + " (ID INTEGER PRIMARY KEY AUTOINCREMENT,ExerciseName TEXT)");
+        db.execSQL("create table " + Table_5 + " (ID INTEGER PRIMARY KEY AUTOINCREMENT,WeeklyCalories DOUBLE, WeeklyWeight DOUBLE)");
         db.execSQL("create table " + ExerciseTable_1 + " (ID INTEGER PRIMARY KEY AUTOINCREMENT,Weight INTEGER, DAY INTEGER)");
         db.execSQL("create table " + ExerciseTable_2 + " (ID INTEGER PRIMARY KEY AUTOINCREMENT,Weight INTEGER, DAY INTEGER)");//setting up 5 exercise tables will increase later in development
         db.execSQL("create table " + ExerciseTable_3 + " (ID INTEGER PRIMARY KEY AUTOINCREMENT,Weight INTEGER, DAY INTEGER)");
@@ -86,6 +91,7 @@ public class ProfileDB extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + Table_2);
         db.execSQL("DROP TABLE IF EXISTS " + Table_3);
         db.execSQL("DROP TABLE IF EXISTS " + Table_4);
+        db.execSQL("DROP TABLE IF EXISTS " + Table_5);
         onCreate(db);
     }
 
@@ -181,6 +187,24 @@ public class ProfileDB extends SQLiteOpenHelper {
             return true;
         }
             }
+
+    public boolean addCalorieCalc(String tableName, double caloriesWeek, double weightWeek){
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(lCol_1, caloriesWeek);
+        contentValues.put(lCol_2, weightWeek);
+
+        Log.i(TAG, "addExerciseData: Adding " + caloriesWeek + " " + tableName);
+        long result = db.insert(tableName, null, contentValues);
+
+        if (result == -1){
+            return false;
+        }
+        else{
+            return true;
+        }
+    }
 
     public int getDayCount(Context context){
         SharedPreferences sp = context.getApplicationContext().getSharedPreferences("dayCount", 0);//0 is private mode
