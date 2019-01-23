@@ -96,7 +96,7 @@ public class NutritionFragment extends Fragment {
 
     public void completeDayFunction(){ //code that completes day of nutrition for the user
         Log.i("complete day", "Daycount is " + dayCount);
-        if((dayCount % 7 != 0) &&  (dayCount!=0)){//if been 7 days ask user to update their weight
+        if((dayCount % 7 != 0) ||  (dayCount==0)){//if been 7 days ask user to update their weight
             dayCount = db.getDayCount(getContext());
             dayCount++;//increments days
             db.updateDayCount(getContext(), dayCount);//updates shared prefs with new amount of days
@@ -265,6 +265,9 @@ public class NutritionFragment extends Fragment {
                             dayCount++;//when added daycount increments
                             db.updateDayCount(getContext(), dayCount);
                             db.addToWeeklyTable(updatedWeight);
+                            db.deleteNutritionData(dayCount);
+                            db.deletePastMeals();
+                            reloadFragment();
                         }
                     }
                 })

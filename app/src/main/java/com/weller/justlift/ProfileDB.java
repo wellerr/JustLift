@@ -222,8 +222,8 @@ public class ProfileDB extends SQLiteOpenHelper {
     public void deletePastMeals(){
         Log.d(TAG, "deleting past meal data");
         SQLiteDatabase db1 = this.getWritableDatabase();
-        db1.execSQL("INSERT INTO " + Table_3 + " (" +  iCol_1 + "," + iCol_2 + "," + iCol_3 + "," + iCol_4 + ") SELECT " + nCol_1 + ","+ nCol_2 + "," + nCol_3 + "," + nCol_4 +" FROM " + Table_2);
-        db1.delete(Table_2, null, null);//on method run copies nutrition table to the past meals table, then deletes nutrition table
+        //db1.execSQL("INSERT INTO " + Table_3 + " (" +  iCol_1 + "," + iCol_2 + "," + iCol_3 + "," + iCol_4 + ") SELECT " + nCol_1 + ","+ nCol_2 + "," + nCol_3 + "," + nCol_4 +" FROM " + Table_2);
+        db1.delete(Table_3, null, null);//on method run copies nutrition table to the past meals table, then deletes nutrition table
     }
 
     public int getDayCount(Context context){
