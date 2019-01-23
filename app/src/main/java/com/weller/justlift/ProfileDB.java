@@ -284,9 +284,16 @@ public class ProfileDB extends SQLiteOpenHelper {
         Cursor data = db1.rawQuery(query, null);
         return data;
     }
-    public Cursor getExerciseData() {
+    public Cursor getExerciseNames() {
         SQLiteDatabase db1 = this.getWritableDatabase();
         String query = "SELECT * FROM " + Table_4;
+        Cursor data = db1.rawQuery(query, null);
+        return data;
+    }
+
+    public Cursor getExerciseData(String tableName) {
+        SQLiteDatabase db1 = this.getWritableDatabase();
+        String query = "SELECT * FROM " + tableName;
         Cursor data = db1.rawQuery(query, null);
         return data;
     }

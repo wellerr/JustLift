@@ -1,5 +1,6 @@
 package com.weller.justlift;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -9,6 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 import android.widget.ListView;
@@ -30,13 +32,22 @@ public class ProgressFragment extends Fragment {
         listView = v.findViewById(R.id.listView);
         populateListView();
 
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(view.getContext(),ProgressGraph.class);
+                intent.putExtra("pos", position);
+                startActivity(intent);
+              //  startActivityForResult(intent,10001);
+            }
+        });
         return v;
     }
 
     public void populateListView() {
         Log.d(TAG, "populateListView: Displaying data in the List View.");
 
-        Cursor data = db.getExerciseData();
+        Cursor data = db.getExerciseNames();
         ArrayList<String> listData = new ArrayList<>();
         int col = data.getColumnCount();
         String column = Integer.toString(col);

@@ -88,7 +88,7 @@ public class WorkoutFragment extends Fragment {
     public void populateListView() {
         Log.d(TAG, "populateListView: Displaying data in the List View.");
 
-        Cursor data = db.getExerciseData();
+        Cursor data = db.getExerciseNames();
         ArrayList<String> listData = new ArrayList<>();
         int col = data.getColumnCount();
         String column = Integer.toString(col);
