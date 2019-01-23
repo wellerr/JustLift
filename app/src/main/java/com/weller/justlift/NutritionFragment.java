@@ -1,6 +1,9 @@
 package com.weller.justlift;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -8,11 +11,13 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.text.InputType;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -90,10 +95,19 @@ public class NutritionFragment extends Fragment {
     }
 
     public void completeDayFunction(){ //code that completes day of nutrition for the user
-        dayCount = db.getDayCount(getContext());
-        dayCount++;//increments days
-        db.updateDayCount(getContext(), dayCount);//updates shared prefs with new amount of days
-        db.deleteNutritionData(dayCount);//deletes nutrition data, adds nutrition data to the past meals table with the day count as a column
+        Log.i("complete day", "Daycount is " + dayCount);
+        if((dayCount % 7 != 0) &&  (dayCount!=0)){//if been 7 days ask user to update their weight
+            dayCount = db.getDayCount(getContext());
+            dayCount++;//increments days
+            db.updateDayCount(getContext(), dayCount);//updates shared prefs with new amount of days
+            db.deleteNutritionData(dayCount);//deletes nutrition data, adds nutrition data to the past meals table with the day count as a column
+        }
+        else{
+            showAddItemDialog(getContext());//if end of week ask for user to enter weight
+
+            //then sum the past meals table for calories and put into weekly
+            //then clear past meals table
+        }
     }
     private void toastMessage(String message){
         Toast.makeText(getContext(),message, Toast.LENGTH_SHORT).show();
@@ -145,7 +159,6 @@ public class NutritionFragment extends Fragment {
     public void reloadFragment(){
         FragmentTransaction ft = getFragmentManager().beginTransaction();
         ft.detach(NutritionFragment.this).attach(NutritionFragment.this).commit();//re-loads the fragment
-
     }
     public void profileData(double remainingCalories, double remainingProtein){
         Cursor data = db.getNutritionProfile();//gets correct columns for the nutrition calculation on this fragment
@@ -231,6 +244,33 @@ public class NutritionFragment extends Fragment {
             caloriesLeft = caloriesLeft + 1000;
         }
         setRemainingCalories.setText(Double.toString(caloriesLeft - remainingCalories));
+    }
+
+    private void showAddItemDialog(final Context context) {
+        final EditText taskEditText = new EditText(context);
+        taskEditText.setInputType(InputType.TYPE_CLASS_NUMBER);
+        taskEditText.setHint("Weight (kg)");
+        AlertDialog dialog = new AlertDialog.Builder(context)//code pulled from https://alvinalexander.com/source-code/android-mockup-prototype-dialog-text-field
+                .setTitle("Update your weight")
+                .setMessage("Please update your weight before continuing")
+                .setView(taskEditText)
+                .setPositiveButton("Add", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        if (taskEditText.getText().toString().isEmpty()){
+                            Toast.makeText(context, "Enter weight", Toast.LENGTH_LONG).show();
+                        }
+                        else {
+                            int updatedWeight = Integer.parseInt(taskEditText.getText().toString());
+                            dayCount++;//when added daycount increments
+                            db.updateDayCount(getContext(), dayCount);
+                            db.addToWeeklyTable(updatedWeight);
+                        }
+                    }
+                })
+                .setNegativeButton("Cancel", null)
+                .create();
+        dialog.show();
     }
 
 

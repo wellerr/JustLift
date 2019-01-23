@@ -186,17 +186,19 @@ public class ProfileDB extends SQLiteOpenHelper {
         else{
             return true;
         }
-            }
+    }
 
-    public boolean addCalorieCalc(String tableName, double caloriesWeek, double weightWeek){
+
+    public boolean addToWeeklyTable(double weightWeek){
+        double caloriesWeek = caloriesWeekly();//gets the weekly calories from method
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues contentValues = new ContentValues();
         contentValues.put(lCol_1, caloriesWeek);
-        contentValues.put(lCol_2, weightWeek);
+        contentValues.put(lCol_2, weightWeek);//adds weekly calories and weekly weight to the week table
 
-        Log.i(TAG, "addExerciseData: Adding " + caloriesWeek + " " + tableName);
-        long result = db.insert(tableName, null, contentValues);
+        Log.i(TAG, "addExerciseData: Adding " + caloriesWeek + " " + Table_5);
+        long result = db.insert(Table_5, null, contentValues);
 
         if (result == -1){
             return false;
@@ -206,9 +208,26 @@ public class ProfileDB extends SQLiteOpenHelper {
         }
     }
 
+    public double caloriesWeekly(){
+        SQLiteDatabase db1 = this.getWritableDatabase();
+        String query = "SELECT " + iCol_2 + " FROM " + Table_3; //gets calories info from past meals table
+        Cursor data = db1.rawQuery(query, null);
+        double weeklyTotal = 0;//sets weekly value to zero
+        while(data.moveToNext()){
+            weeklyTotal += data.getInt(0); //adds each meal to the weekly value
+        }
+        return weeklyTotal;
+    }
+
+    public void deletePastMeals(){
+        Log.d(TAG, "deleting past meal data");
+        SQLiteDatabase db1 = this.getWritableDatabase();
+        db1.execSQL("INSERT INTO " + Table_3 + " (" +  iCol_1 + "," + iCol_2 + "," + iCol_3 + "," + iCol_4 + ") SELECT " + nCol_1 + ","+ nCol_2 + "," + nCol_3 + "," + nCol_4 +" FROM " + Table_2);
+        db1.delete(Table_2, null, null);//on method run copies nutrition table to the past meals table, then deletes nutrition table
+    }
+
     public int getDayCount(Context context){
         SharedPreferences sp = context.getApplicationContext().getSharedPreferences("dayCount", 0);//0 is private mode
-        SharedPreferences.Editor editor = sp.edit();
         int dayCount =sp.getInt("dayCount", 0);// gets int stored for day count
         return dayCount;
     }
