@@ -263,11 +263,11 @@ public class NutritionFragment extends Fragment {
                         else {
                             int updatedWeight = Integer.parseInt(taskEditText.getText().toString());
                             dayCount++;//when added daycount increments
-                            db.updateDayCount(getContext(), dayCount);
-                            db.addToWeeklyTable(updatedWeight);
+                            db.updateDayCount(getContext(), dayCount);//updates daycount
+                            db.addToWeeklyTable(updatedWeight);//adds weight to the weekly table
                             db.deleteNutritionData(dayCount);
-                            db.deletePastMeals();
-                            reloadFragment();
+                            db.deletePastMeals();//deletes table data to not clog up user device
+                            reloadFragment();//reloads fragment so listview updates
                         }
                     }
                 })
