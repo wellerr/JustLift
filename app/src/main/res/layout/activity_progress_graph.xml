@@ -5,10 +5,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.softmoore.android.graphlib.GraphView
-        android:id="@+id/graph_view"
-        android:layout_width="323dp"
-        android:layout_height="323dp"/>
+    <com.github.mikephil.charting.charts.LineChart
+        android:id="@+id/lineChart"
+        android:layout_width="match_parent"
+        android:layout_height="475dp"></com.github.mikephil.charting.charts.LineChart>
 
     <TextView
         android:id="@+id/graph_view_label"
