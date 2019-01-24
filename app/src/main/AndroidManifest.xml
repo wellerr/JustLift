@@ -21,6 +21,8 @@
         <activity android:name=".AddExercise"/>
         <activity android:name=".AddExerciseWeight"/>
         <activity android:name=".ProgressGraph"/>
+        <activity android:name=".SignUp1"/>
+        <activity android:name=".SignUp2"/>
         <activity android:name=".ListActivity"></activity>
     </application>
 

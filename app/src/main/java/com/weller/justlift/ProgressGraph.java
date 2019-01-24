@@ -35,9 +35,11 @@ public class ProgressGraph extends AppCompatActivity implements OnChartGestureLi
         db = new ProfileDB(getApplicationContext());
         mchart = (LineChart) findViewById(R.id.lineChart);
         Cursor cursor;
+        Cursor exerciseNames = db.getExerciseNames();
         ArrayList<Entry>yData = new ArrayList<>();
 
           switch (posValue){//if position of listvalue, enter into specific table
+
                         case 0:
                             cursor = db.getExerciseData(db.ExerciseTable_1);//sets cursor to first exercise
                             yData = addData(cursor);//sets ydata to the information read from the cursor
@@ -52,7 +54,7 @@ public class ProgressGraph extends AppCompatActivity implements OnChartGestureLi
                             break;
                         case 3:
                             cursor = db.getExerciseData(db.ExerciseTable_4);
-                          yData=  addData(cursor);
+                            yData=  addData(cursor);
                             break;
                         case 4:
                             cursor = db.getExerciseData(db.ExerciseTable_5);
@@ -76,8 +78,7 @@ public class ProgressGraph extends AppCompatActivity implements OnChartGestureLi
         mchart.invalidate();
 
         TextView textView = findViewById(R.id.graph_view_label);
-        textView.setText("Graph of Axes");
-        //graph = findViewById(R.id.graph_view);
+        textView.setText("Progress Graph");
     }
 
     public ArrayList<Entry> addData(Cursor cursor){

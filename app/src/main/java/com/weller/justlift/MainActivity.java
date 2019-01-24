@@ -2,6 +2,7 @@ package com.weller.justlift;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -24,19 +25,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        isFirst = firstCheck();
-        if (isFirst) {
-            //startActivity(new Intent(MainActivity.this, NutritionFragment.class));
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                    new ProfileFragment()).commit();
-            isFirst = false;//next time app is run this if will pass false
-        }
-        else{
+
+        myDB = new ProfileDB(getApplicationContext());
+        Cursor profileData = myDB.getProfileData();
+        if(profileData!=null && profileData.getCount()>0){//if user has already got a profile...
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                     new NutritionFragment()).commit();
         }
-    //    getSharedPreferences("firstRun", MODE_PRIVATE).edit()
-     //           .putBoolean("isFirstRun", false).commit();
+        else{//if profile hasn't been created yet...
+            Intent intent = new Intent(MainActivity.this, SignUp1.class);
+            startActivity(intent);
+        }
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -55,11 +54,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
         switch (menuItem.getItemId()) { //switch statement finds the clicked menu item by the id
-            case R.id.nav_home:
+           /* case R.id.nav_home:
                 //code executed when id workout clicked
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                         new HomeFragment()).commit();
-                break;//once clicked, executed and then continues
+                break;//once clicked, executed and then continues*/
             case R.id.nav_workout:
                 //code executed when id workout clicked
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
@@ -93,19 +92,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         } else {
             super.onBackPressed();
         }
-    }
-
-    public boolean firstCheck() {
-        if (isFirst == null) {//if isFirst hasn't been initialised (this occurs on first run)
-            SharedPreferences mPreferences = this.getSharedPreferences("firstRun", MODE_PRIVATE); //gets shared preference tag firstRun
-            isFirst = mPreferences.getBoolean("firstRun", true);//sets it to true and returns firstRun as true
-            if (isFirst) {//if isFirst set to true
-                SharedPreferences.Editor editor = mPreferences.edit();
-                editor.putBoolean("firstRun", false);//edits to false
-                editor.commit();
-            }
-        }
-        return isFirst;//returns if it's the first time app has been run
     }
 
 
