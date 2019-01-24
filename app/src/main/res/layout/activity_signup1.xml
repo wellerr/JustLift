@@ -6,7 +6,8 @@
 
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimaryDark">
+    android:background="@color/colorPrimaryDark"
+    >
 
     <TextView
     android:id="@+id/textView"
@@ -29,95 +30,104 @@
         android:paddingHorizontal="20dp"
         android:paddingTop="50dp"
         android:text="Please fill out some basic information about yourself"
-        android:textColor="@android:color/white"
+        android:textColor="@color/colorTextBody"
         tools:layout_editor_absoluteX="163dp"
         tools:layout_editor_absoluteY="86dp" />
 
     <android.support.design.widget.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="20dp"
         android:paddingHorizontal="20dp"
-        app:errorEnabled="true">
+        android:paddingTop="20dp"
+        android:textColorHint="@color/colorTextBody"
+        app:errorEnabled="true"
+        app:hintTextAppearance="@color/colorTextBody">
 
         <android.support.design.widget.TextInputEditText
             android:id="@+id/text_firstname"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColorHint="@android:color/white"
             android:hint="First Name"
             android:inputType="text"
-            android:textColor="@android:color/white" />
+            android:textColor="@color/colorTextBody"></android.support.design.widget.TextInputEditText>
     </android.support.design.widget.TextInputLayout>
 
-
-
-    <android.support.design.widget.TextInputLayout
-
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:paddingHorizontal="20dp"
-        android:paddingTop="5dp"
-    app:errorEnabled="true">
-
-    <android.support.design.widget.TextInputEditText
-    android:id="@+id/text_surname"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-        android:textColorHint="@android:color/white"
-    android:hint="Surname"
-    android:inputType="text" />
-</android.support.design.widget.TextInputLayout>
 
     <android.support.design.widget.TextInputLayout
 
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingVertical="5dp"
         android:paddingHorizontal="20dp"
+        android:paddingTop="5dp"
+        android:textColorHint="@color/colorTextBody"
+        app:errorEnabled="true">
+
+        <android.support.design.widget.TextInputEditText
+            android:id="@+id/text_surname"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Surname"
+            android:inputType="text"
+            android:textColor="@color/colorTextBody">
+
+        </android.support.design.widget.TextInputEditText>
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="20dp"
+        android:paddingVertical="5dp"
+        android:textColorHint="@color/colorTextBody"
         app:errorEnabled="true">
 
         <android.support.design.widget.TextInputEditText
             android:id="@+id/text_age"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColorHint="@android:color/white"
             android:hint="Age"
-            android:inputType="number" />
+            android:inputType="number"
+            android:textColor="@color/colorTextBody"
+            android:textColorHint="@android:color/white" />
     </android.support.design.widget.TextInputLayout>
 
     <android.support.design.widget.TextInputLayout
 
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingVertical="5dp"
         android:paddingHorizontal="20dp"
+        android:paddingVertical="5dp"
+        android:textColorHint="@color/colorTextBody"
         app:errorEnabled="true">
 
         <android.support.design.widget.TextInputEditText
             android:id="@+id/text_height"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColorHint="@android:color/white"
             android:hint="Height (cm)"
-            android:inputType="number" />
+            android:inputType="number"
+            android:textColor="@color/colorTextBody"
+            android:textColorHint="@android:color/white" />
     </android.support.design.widget.TextInputLayout>
 
     <android.support.design.widget.TextInputLayout
 
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingVertical="5dp"
         android:paddingHorizontal="20dp"
+        android:paddingVertical="5dp"
+        android:textColorHint="@color/colorTextBody"
         app:errorEnabled="true">
 
         <android.support.design.widget.TextInputEditText
             android:id="@+id/text_weight"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColorHint="@android:color/white"
             android:hint="Weight (kg)"
-            android:inputType="number" />
+            android:inputType="number"
+            android:textColor="@color/colorTextBody"
+            android:textColorHint="@android:color/white" />
     </android.support.design.widget.TextInputLayout>
     <Button
         android:id="@+id/nextButton"

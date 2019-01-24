@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#ae0b0e</color>
-    <color name="colorPrimaryDark">#50000c</color>
-    <color name="colorAccent">#dc777e</color>
+    <style name="textColor">
+        <item name="android:textColor">#FFFFFF</item>
+    </style>
+    <color name="colorPrimary">#465B66</color>
+    <color name="colorPrimaryDark">#35454D</color>
+    <color name="colorAccent">#78B5DA</color>
+    <color name="colorBackground">#232E33</color>
+    <color name="colorTextBody">#FFFFFF</color>
+
 </resources>

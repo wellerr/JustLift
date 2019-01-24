@@ -57,7 +57,7 @@ public class ProgressFragment extends Fragment {
             for(int i=1; i<col; i++) {//iterates through columns retrieving user data
                 listData.add(data.getString(i));
             }
-            ListAdapter adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, listData);
+            ListAdapter adapter = new ArrayAdapter<>(getContext(), R.layout.my_text_view, listData);
             listView.setAdapter(adapter);
         }
     }

@@ -19,7 +19,7 @@ public class SplashScreen extends AppCompatActivity {
                 .withTargetActivity(MainActivity.class)
                 .withSplashTimeOut(1000)
                 //.withBackgroundResource(android.R.color.background_dark)
-                .withBackgroundColor(Color.parseColor("#50000c"))//colour from theme
+                .withBackgroundColor(Color.parseColor("#35454D"))//colour from theme
                 .withLogo(R.mipmap.ic_launcher)
                 .withHeaderText("")//couldn't delete this line without crash?
                 //.withFooterText

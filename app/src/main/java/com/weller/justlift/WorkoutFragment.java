@@ -99,7 +99,8 @@ public class WorkoutFragment extends Fragment {
                 listData.add(data.getString(i));
             }
 
-            ListAdapter adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, listData);
+            ListAdapter adapter = new ArrayAdapter<>(getContext(), R.layout.my_text_view, listData);
+
             listView.setAdapter(adapter);
         }
     }

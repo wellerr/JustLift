@@ -13,7 +13,8 @@
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:id="@+id/textView1"
-        android:layout_weight="33.3"/>
+        android:layout_weight="33.3"
+        android:textColor="@color/colorTextBody"/>
     <TextView
         android:layout_gravity="top"
         android:textAlignment="center"
@@ -21,7 +22,8 @@
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:id="@+id/textView2"
-        android:layout_weight="33.3"/>
+        android:layout_weight="33.3"
+        android:textColor="@color/colorTextBody"/>
 
     <TextView
         android:layout_gravity="top"
@@ -30,7 +32,8 @@
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:id="@+id/textView3"
-        android:layout_weight="33.3"/>
+        android:layout_weight="33.3"
+        android:textColor="@color/colorTextBody"/>
 
 
 

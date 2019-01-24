@@ -29,8 +29,8 @@
             android:id="@+id/spinner_gender"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingTop="10dp"
-            android:paddingBottom="10dp"/>
+            android:paddingTop="20dp"
+            android:paddingBottom="30dp" />
     </android.support.design.widget.TextInputLayout>
 
     <android.support.design.widget.TextInputLayout
@@ -41,8 +41,8 @@
             android:id="@+id/spinner_activity"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingTop="10dp"
-            android:paddingBottom="10dp"/>
+            android:paddingTop="20dp"
+            android:paddingBottom="30dp" />
 
     </android.support.design.widget.TextInputLayout>
 
@@ -50,12 +50,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-    <Spinner
-        android:id="@+id/spinner_gains"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp"/>
+        <Spinner
+            android:id="@+id/spinner_gains"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="20dp"
+            android:paddingBottom="30dp" />
     </android.support.design.widget.TextInputLayout>
 
     <Button
