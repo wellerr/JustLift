@@ -21,21 +21,12 @@
         tools:layout_editor_absoluteX="163dp"
         tools:layout_editor_absoluteY="86dp" />
 
-    <android.support.design.widget.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
         <Spinner
             android:id="@+id/spinner_gender"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingTop="20dp"
             android:paddingBottom="30dp" />
-    </android.support.design.widget.TextInputLayout>
-
-    <android.support.design.widget.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
 
         <Spinner
             android:id="@+id/spinner_activity"
@@ -44,19 +35,12 @@
             android:paddingTop="20dp"
             android:paddingBottom="30dp" />
 
-    </android.support.design.widget.TextInputLayout>
-
-    <android.support.design.widget.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
         <Spinner
             android:id="@+id/spinner_gains"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingTop="20dp"
             android:paddingBottom="30dp" />
-    </android.support.design.widget.TextInputLayout>
 
     <Button
         android:id="@+id/submitButton"

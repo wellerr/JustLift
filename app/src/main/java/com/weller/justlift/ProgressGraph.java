@@ -8,7 +8,9 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.widget.TextView;
 
+import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
@@ -68,17 +70,32 @@ public class ProgressGraph extends AppCompatActivity implements OnChartGestureLi
         mchart.setScaleEnabled(false);
 
         LineDataSet setValues = new LineDataSet(yData, "Weight Lifted");
+        setValues.setColor(getColor(R.color.colorTextBody));
         setValues.setAxisDependency(YAxis.AxisDependency.LEFT);
         List<ILineDataSet> dataSets = new ArrayList<>();
+
         dataSets.add(setValues);
-        setValues.setColor(R.color.colorPrimary);
-        setValues.setLineWidth(3f);
+        setValues.setLineWidth(6f);
         LineData data = new LineData(dataSets);
         mchart.setData(data);
-        mchart.invalidate();
+
+        mchart.setAutoScaleMinMaxEnabled(true);
+        mchart.setBackgroundColor(getColor(R.color.colorBackground));
+
+        YAxis leftAxis = mchart.getAxisLeft();
+        leftAxis.setTextColor(getColor(R.color.colorTextBody));
+        XAxis topAxis = mchart.getXAxis();
+        topAxis.setTextColor(getColor(R.color.colorTextBody));
+        YAxis rightAxis = mchart.getAxisRight();
+        rightAxis.setTextColor(getColor(R.color.colorTextBody));
+
+        mchart.animateX(600, Easing.EaseInBack); // animate horizontal 3000 milliseconds
+
 
         TextView textView = findViewById(R.id.graph_view_label);
+        textView.setTextColor(getColor(R.color.colorTextBody));
         textView.setText("Progress Graph");
+        mchart.invalidate();
     }
 
     public ArrayList<Entry> addData(Cursor cursor){

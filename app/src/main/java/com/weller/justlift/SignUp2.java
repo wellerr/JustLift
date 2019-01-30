@@ -48,24 +48,24 @@ public class SignUp2 extends AppCompatActivity implements AdapterView.OnItemSele
         submitButton = findViewById(R.id.submitButton);
 
         spinner_gender = findViewById(R.id.spinner_gender);
-        ArrayAdapter<CharSequence> adapter_gender = ArrayAdapter.createFromResource(getApplicationContext(), R.array.sex, android.R.layout.simple_spinner_item);
+        ArrayAdapter<CharSequence> adapter_gender = ArrayAdapter.createFromResource(getApplicationContext(), R.array.sex, R.layout.my_spinner);
         adapter_gender.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner_gender.setAdapter(adapter_gender);
         spinner_gender.setOnItemSelectedListener(this);
         // this spinner is for the genderString of the user
 
         spinner_activity = findViewById(R.id.spinner_activity);
-        ArrayAdapter<CharSequence> adapter_activity = ArrayAdapter.createFromResource(getApplicationContext(), R.array.activity, android.R.layout.simple_spinner_item);
+        ArrayAdapter<CharSequence> adapter_activity = ArrayAdapter.createFromResource(getApplicationContext(), R.array.activity, R.layout.my_spinner);
         adapter_activity.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner_activity.setAdapter(adapter_activity);
-        spinner_gender.setOnItemSelectedListener(this);
-
+        spinner_activity.setOnItemSelectedListener(this);
 
         spinner_gains = findViewById(R.id.spinner_gains);
-        ArrayAdapter<CharSequence> adapter_gains = ArrayAdapter.createFromResource(getApplicationContext(), R.array.gains, android.R.layout.simple_spinner_item);
+        ArrayAdapter<CharSequence> adapter_gains = ArrayAdapter.createFromResource(getApplicationContext(), R.array.gains, R.layout.my_spinner);
         adapter_activity.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner_gains.setAdapter(adapter_gains);
         spinner_gains.setOnItemSelectedListener(this);
+
 
         submitButton = findViewById(R.id.submitButton);
 

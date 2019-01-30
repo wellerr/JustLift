@@ -36,7 +36,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="Add Exercise"
-            android:textColor="@color/colorTextBody"
+            android:textColor="@color/colorPrimary"
             />
     </android.support.design.widget.TextInputLayout>
 

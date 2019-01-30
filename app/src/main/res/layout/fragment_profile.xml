@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -11,6 +12,7 @@
     <android.support.design.widget.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textColorHint="@color/colorTextBody"
         app:errorEnabled="true">
 
         <android.support.design.widget.TextInputEditText
@@ -18,8 +20,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="First Name"
-            android:textColor="@color/colorTextBody"
-            android:inputType="text"/>
+            android:inputType="text"
+            android:textColor="@color/colorTextBody" />
     </android.support.design.widget.TextInputLayout>
 
 
@@ -27,6 +29,7 @@
 
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textColorHint="@color/colorTextBody"
         app:errorEnabled="true">
 
         <android.support.design.widget.TextInputEditText
@@ -34,16 +37,16 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Surname"
-            android:textColor="@color/colorTextBody"
-            android:inputType="text" />
+            android:inputType="text"
+            android:textColor="@color/colorTextBody" />
     </android.support.design.widget.TextInputLayout>
-
 
 
     <android.support.design.widget.TextInputLayout
 
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textColorHint="@color/colorTextBody"
         app:errorEnabled="true">
 
         <android.support.design.widget.TextInputEditText
@@ -51,14 +54,16 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Age"
+            android:inputType="number"
             android:textColor="@color/colorTextBody"
-            android:inputType="number" />
+            android:textColorHint="@color/colorTextBody" />
     </android.support.design.widget.TextInputLayout>
 
     <android.support.design.widget.TextInputLayout
 
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textColorHint="@color/colorTextBody"
         app:errorEnabled="true">
 
         <android.support.design.widget.TextInputEditText
@@ -66,14 +71,15 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Height (cm)"
-            android:textColor="@color/colorTextBody"
-            android:inputType="number" />
+            android:inputType="number"
+            android:textColor="@color/colorTextBody" />
     </android.support.design.widget.TextInputLayout>
 
     <android.support.design.widget.TextInputLayout
 
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textColorHint="@color/colorTextBody"
         app:errorEnabled="true">
 
         <android.support.design.widget.TextInputEditText
@@ -81,8 +87,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Weight (kg)"
-            android:textColor="@color/colorTextBody"
-            android:inputType="number" />
+            android:inputType="number"
+            android:textColor="@color/colorTextBody" />
     </android.support.design.widget.TextInputLayout>
 
     <android.support.design.widget.TextInputLayout
@@ -94,7 +100,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingTop="10dp"
-            android:paddingBottom="10dp"/>
+            android:paddingBottom="10dp" />
     </android.support.design.widget.TextInputLayout>
 
     <android.support.design.widget.TextInputLayout
@@ -127,6 +133,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:onClick="submitClicked"
+        android:textColor="@color/colorPrimary"
         android:text="Submit" />
 
     <Button
@@ -134,6 +141,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:onClick="viewClicked"
+        android:textColor="@color/colorPrimary"
         android:text="View Data" />
 
 </LinearLayout>

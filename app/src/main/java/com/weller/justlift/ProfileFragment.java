@@ -58,21 +58,21 @@ public class ProfileFragment extends Fragment implements AdapterView.OnItemSelec
 
 
         spinner_gender = v.findViewById(R.id.spinner_gender);
-        ArrayAdapter<CharSequence> adapter_gender = ArrayAdapter.createFromResource(v.getContext(), R.array.sex, android.R.layout.simple_spinner_item);
+        ArrayAdapter<CharSequence> adapter_gender = ArrayAdapter.createFromResource(v.getContext(), R.array.sex, R.layout.my_spinner);
         adapter_gender.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner_gender.setAdapter(adapter_gender);
         spinner_gender.setOnItemSelectedListener(this);
         // this spinner is for the genderString of the user
 
         spinner_activity = v.findViewById(R.id.spinner_activity);
-        ArrayAdapter<CharSequence> adapter_activity = ArrayAdapter.createFromResource(v.getContext(), R.array.activity, android.R.layout.simple_spinner_item);
+        ArrayAdapter<CharSequence> adapter_activity = ArrayAdapter.createFromResource(v.getContext(), R.array.activity, R.layout.my_spinner);
         adapter_activity.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner_activity.setAdapter(adapter_activity);
         spinner_activity.setOnItemSelectedListener(this);
 
 
         spinner_gains = v.findViewById(R.id.spinner_gains);
-        ArrayAdapter<CharSequence> adapter_gains = ArrayAdapter.createFromResource(v.getContext(), R.array.gains, android.R.layout.simple_spinner_item);
+        ArrayAdapter<CharSequence> adapter_gains = ArrayAdapter.createFromResource(v.getContext(), R.array.gains, R.layout.my_spinner);
         adapter_activity.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner_gains.setAdapter(adapter_gains);
         spinner_gains.setOnItemSelectedListener(this);
