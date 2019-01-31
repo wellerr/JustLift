@@ -42,7 +42,7 @@ public class NutritionFragment extends Fragment {
     TextView setCalories;
     TextView setProtein;
     TextView setRemainingCalories;
-    TextView getSetRemainingProtein;
+    TextView setRemainingProtein;
 
     ArrayList<NutritionData> listData = new ArrayList<>();
 
@@ -57,6 +57,7 @@ public class NutritionFragment extends Fragment {
         setCalories = v.findViewById(R.id.setCalories);
         setProtein = v.findViewById(R.id.setProtein);
         setRemainingCalories = v.findViewById(R.id.setRemainingCalories);
+        setRemainingProtein = v.findViewById(R.id.setRemainingProtein);
         populateListView();
 
         double totalCalories = totalCalories();
@@ -196,7 +197,8 @@ public class NutritionFragment extends Fragment {
                 String test = arr.get(i);
                 Log.i(TAG, test);
             }
-            calculateCaloriesLeft(arr, remainingCalories);
+            calculateCaloriesLeft(arr, remainingCalories);//calculates the remaining calories and updates the field for user to see
+            calculateProteinLeft(arr, remainingProtein);//calculates the remaining protein and updates the field for user to see
         }
     }
 
@@ -250,6 +252,13 @@ public class NutritionFragment extends Fragment {
                 break;
         }
         setRemainingCalories.setText(Double.toString(caloriesLeft - remainingCalories));
+    }
+    public  void calculateProteinLeft (ArrayList<String> profile, double remainingProtein){
+        //Recommended 1.4 to 2g per kg body weight for strength training
+        double proteinLeft;
+        int weight = Integer.parseInt(profile.get(2));
+        proteinLeft = weight *1.7;
+        setRemainingProtein.setText(Double.toString(proteinLeft - remainingProtein));
     }
 
     private void showAddItemDialog(final Context context) {

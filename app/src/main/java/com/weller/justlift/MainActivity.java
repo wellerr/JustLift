@@ -54,11 +54,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
         switch (menuItem.getItemId()) { //switch statement finds the clicked menu item by the id
-           /* case R.id.nav_home:
-                //code executed when id workout clicked
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                        new HomeFragment()).commit();
-                break;//once clicked, executed and then continues*/
             case R.id.nav_workout:
                 //code executed when id workout clicked
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
