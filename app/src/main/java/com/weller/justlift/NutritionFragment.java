@@ -207,41 +207,47 @@ public class NutritionFragment extends Fragment {
         String gender = profile.get(3);//gets data for each section
         String activity = profile.get(4);
         String gains = profile.get(5);
-        double caloriesLeft;
-        if(gender.contains("male")){
-            caloriesLeft = ((10 * weight) + (6.25 * height) - (5 * age) + 5);//male mifflin st jeor equation
-        }
-        else{
-            caloriesLeft = ((10 * weight) + (6.25 * height) - (5 * age) - 161);//female mifflin st jeor
-        }
-
-        if(activity.contains("Sedentary")){//adds activity factor
-            caloriesLeft = caloriesLeft * 1.2;
-        }
-        else if(activity.contains("Lightly Active")){
-            caloriesLeft = caloriesLeft * 1.375;
-        }
-        else if(activity.contains("Moderately Active")){
-            caloriesLeft = caloriesLeft * 1.550;
-        }
-        else if(activity.contains("Very Active")){
-            caloriesLeft = caloriesLeft * 1.725;
-        }
-        else if(activity.contains("Extremely Active")){
-            caloriesLeft = caloriesLeft * 1.9;
+        double caloriesLeft = 0;
+        Log.i(TAG, gender + " " + activity + " " + gains);
+        switch(gender) {
+            case "Male":
+                caloriesLeft = ((10 * weight) + (6.25 * height) - (5 * age) + 5);//male mifflin st jeor equation
+                break;
+            case "Female":
+                caloriesLeft = ((10 * weight) + (6.25 * height) - (5 * age) - 161);//female mifflin st jeor
+                break;
         }
 
-        if(gains.contains("Slow Gains")){
-            caloriesLeft = caloriesLeft + 250;
+        switch(activity){
+            case "Sedentary (little to no exercise)"://these string values are copied from the spinner string values
+                caloriesLeft = caloriesLeft *1.2;
+                break;
+            case "Lightly Active (intense exercise once or twice a week)":
+                caloriesLeft = caloriesLeft * 1.375;
+                break;
+            case "Moderately Active (intense exercise 3 to 4 times a week)":
+                caloriesLeft = caloriesLeft * 1.550;
+                break;
+            case "Very Active (intense exercise 5 to 7 times a week)":
+                caloriesLeft = caloriesLeft * 1.725;
+                break;
+            case "Extremely Active (very active + a physically demanding daily schedule)":
+                caloriesLeft = caloriesLeft * 1.9;
+                break;
         }
-        else if(gains.contains("Standards Gains")){
-            caloriesLeft = caloriesLeft + 500;
-        }
-        else if(gains.contains("Faster Gains")){
-            caloriesLeft = caloriesLeft + 750;
-        }
-        else if(gains.contains("Extreme Gains")){
-            caloriesLeft = caloriesLeft + 1000;
+        switch(gains) {
+            case "Slow Gains (0.5lbs a week)":
+                caloriesLeft += 250;
+                break;
+            case "Standard Gains (1lb a week)":
+                caloriesLeft += 500;
+                break;
+            case "Faster Gains (1.5lbs a week)s":
+                caloriesLeft += 750;
+                break;
+            case "Extreme Gains (2lbs a week)":
+                caloriesLeft += 1000;
+                break;
         }
         setRemainingCalories.setText(Double.toString(caloriesLeft - remainingCalories));
     }
