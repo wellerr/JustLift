@@ -17,6 +17,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".MainActivity" />
+        <activity android:name=".LinearRegression"/>
         <activity android:name=".AddMeal"/>
         <activity android:name=".AddExercise"/>
         <activity android:name=".AddExerciseWeight"/>

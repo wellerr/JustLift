@@ -28,6 +28,7 @@ import static com.weller.justlift.ProfileDB.TAG;
 
 public class NutritionFragment extends Fragment {
     NutritionData nutrition;
+    Activity Load;
     public ProfileDB db;
 
     Button addMeal;
@@ -44,6 +45,8 @@ public class NutritionFragment extends Fragment {
     TextView setRemainingCalories;
     TextView setRemainingProtein;
 
+    Activity mActivity;
+
     ArrayList<NutritionData> listData = new ArrayList<>();
 
     @Nullable
@@ -53,6 +56,9 @@ public class NutritionFragment extends Fragment {
         addMeal = v.findViewById(R.id.addMealButton);
         completeDay = v.findViewById(R.id.completeButton);
         db = new ProfileDB(getContext());
+
+        mActivity = getActivity();
+
         listView = v.findViewById(R.id.listView);
         setCalories = v.findViewById(R.id.setCalories);
         setProtein = v.findViewById(R.id.setProtein);
@@ -282,7 +288,11 @@ public class NutritionFragment extends Fragment {
                             db.addToWeeklyTable(updatedWeight);//adds weight to the weekly table
                             db.deleteNutritionData(dayCount);
                             db.deletePastMeals();//deletes table data to not clog up user device
-                            reloadFragment();//reloads fragment so listview updates
+                           // reloadFragment();//reloads fragment so listview updated
+                            Intent i = new Intent(mActivity, SplashScreen.class);
+                            i.putExtra("Code", 1);//passes code into splash screen that tells
+                            //splash screen it is performing linear regression algorithm
+                           mActivity.startActivity(i);
                         }
                     }
                 })
