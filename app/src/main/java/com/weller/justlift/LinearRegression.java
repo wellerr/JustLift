@@ -1,25 +1,49 @@
 package com.weller.justlift;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.widget.TextView;
 
 import java.text.DecimalFormat;
 
 public class LinearRegression extends AppCompatActivity {//     This class performs linear regression on new weight data to find an updated amount of calories for user next week
 
+    String TAG = "LinearRegression";
     TextView caloriesText;
     ProfileDB db;
 
     protected void onCreate (@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
        setContentView(R.layout.updated_nutrition);
+       Intent i = getIntent();
+       double userBMR = i.getDoubleExtra("Calories", 0);
+
+
+
+
+
+       Log.i(TAG, Double.toString(userBMR));
        caloriesText =  findViewById(R.id.caloriesUpdate);
-       int calories = 2500;
-       caloriesText.setText(Integer.toString(calories));
+       double calories = userBMR;
+       db = new ProfileDB(getApplicationContext());
+
+      Cursor c = db.getWeeklyTable();
+      int x = c.getCount();
+      if(x == 1){
+          double x1,x2,x3,x4,x5;//these will be initial x values, calculated from user calories
+          double y1,y2,y3,y4,y5;//initial y values calculated from user weight
+          double[] l = {17500, 19250, 21000, 22750, 24500};
+          double[] y = {0, 0.5, 1, 1.5, 2};
+          //if first weight change log, add the standard linear regression data to table
+      }
+        Log.i(TAG, Integer.toString(x));
+
+       caloriesText.setText(Double.toString(calories));
 
 
        int timeOut = 3000;

@@ -20,6 +20,7 @@ public class SplashScreen extends AppCompatActivity {
         setContentView(R.layout.activity_splash_screen);
         Intent i = getIntent();
         Integer code = i.getIntExtra("Code", 0);
+        final Double calories = i.getDoubleExtra("Calories", 0);//gets the users needed calories from nutrition
         Log.i(TAG, Integer.toString(code));
         if (code != 1) {//If screen loads at startup
             EasySplashScreen config = new EasySplashScreen(SplashScreen.this)
@@ -58,6 +59,7 @@ public class SplashScreen extends AppCompatActivity {
             handler.postDelayed(new Runnable() {
                 public void run() {
                     Intent intent = new Intent(SplashScreen.this, LinearRegression.class);
+                    intent.putExtra("Calories", calories);//sends users needed calories to linear regression
                     startActivity(intent);
                 }
             }, timeOut);//the time delay set

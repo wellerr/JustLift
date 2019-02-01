@@ -5,6 +5,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.database.Cursor;
+import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.support.design.widget.TabLayout;
@@ -206,6 +207,33 @@ public class ProfileDB extends SQLiteOpenHelper {
         else{
             return true;
         }
+    }
+
+
+    public boolean addFirstWeeklyTable(double weightWeek){
+        double caloriesWeek = caloriesWeekly();//gets the weekly calories from method
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(lCol_1, caloriesWeek);
+        contentValues.put(lCol_2, weightWeek);//adds weekly calories and weekly weight to the week table
+
+        Log.i(TAG, "addExerciseData: Adding " + caloriesWeek + " " + Table_5);
+        long result = db.insert(Table_5, null, contentValues);
+
+        if (result == -1){
+            return false;
+        }
+        else{
+            return true;
+        }
+    }
+
+    public Cursor getWeeklyTable(){
+        SQLiteDatabase db1 = this.getWritableDatabase();
+        String query = "SELECT * FROM " + Table_5;
+        Cursor data = db1.rawQuery(query, null);
+        return data;
     }
 
     public double caloriesWeekly(){

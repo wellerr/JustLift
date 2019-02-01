@@ -48,6 +48,7 @@ public class NutritionFragment extends Fragment {
     Activity mActivity;
 
     ArrayList<NutritionData> listData = new ArrayList<>();
+    Double caloriesLeft;
 
     @Nullable
     @Override
@@ -71,7 +72,7 @@ public class NutritionFragment extends Fragment {
 
         double totalProtein = totalProtein();
         setProtein.setText(Double.toString(totalProtein));
-        profileData(totalCalories, totalProtein);
+        caloriesLeft = profileData(totalCalories, totalProtein);
 
 
         addMeal.setOnClickListener(new View.OnClickListener() {
@@ -167,7 +168,7 @@ public class NutritionFragment extends Fragment {
         FragmentTransaction ft = getFragmentManager().beginTransaction();
         ft.detach(NutritionFragment.this).attach(NutritionFragment.this).commit();//re-loads the fragment
     }
-    public void profileData(double remainingCalories, double remainingProtein){
+    public double profileData(double remainingCalories, double remainingProtein){
         Cursor data = db.getNutritionProfile();//gets correct columns for the nutrition calculation on this fragment
         int col = data.getColumnCount();
             //Log.d(TAG, Integer.toString(data.getColumnCount()));
@@ -203,12 +204,15 @@ public class NutritionFragment extends Fragment {
                 String test = arr.get(i);
                 Log.i(TAG, test);
             }
-            calculateCaloriesLeft(arr, remainingCalories);//calculates the remaining calories and updates the field for user to see
+          double BMR = calculateCaloriesLeft(arr, remainingCalories);//calculates the user's BMR and updates the field for user to see
             calculateProteinLeft(arr, remainingProtein);//calculates the remaining protein and updates the field for user to see
+           // setRemainingCalories.setText(Double.toString(calories - remainingCalories));
+            return BMR;
         }
+        return remainingCalories;
     }
 
-    public  void calculateCaloriesLeft (ArrayList<String> profile, double remainingCalories){
+    public Double calculateCaloriesLeft (ArrayList<String> profile, Double remainingCalories){
         int age = Integer.parseInt(profile.get(0));
         int height = Integer.parseInt(profile.get(1));
         int weight = Integer.parseInt(profile.get(2));
@@ -243,6 +247,7 @@ public class NutritionFragment extends Fragment {
                 caloriesLeft = caloriesLeft * 1.9;
                 break;
         }
+        double BMR = caloriesLeft;
         switch(gains) {
             case "Slow Gains (0.5lbs a week)":
                 caloriesLeft += 250;
@@ -258,7 +263,8 @@ public class NutritionFragment extends Fragment {
                 break;
         }
         setRemainingCalories.setText(Double.toString(caloriesLeft - remainingCalories));
-    }
+        return  BMR;
+       }
     public  void calculateProteinLeft (ArrayList<String> profile, double remainingProtein){
         //Recommended 1.4 to 2g per kg body weight for strength training
         double proteinLeft;
@@ -291,6 +297,7 @@ public class NutritionFragment extends Fragment {
                            // reloadFragment();//reloads fragment so listview updated
                             Intent i = new Intent(mActivity, SplashScreen.class);
                             i.putExtra("Code", 1);//passes code into splash screen that tells
+                            i.putExtra("Calories", caloriesLeft);
                             //splash screen it is performing linear regression algorithm
                            mActivity.startActivity(i);
                         }
