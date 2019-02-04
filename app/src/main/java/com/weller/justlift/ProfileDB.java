@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
+import java.net.ConnectException;
 import java.util.ArrayList;
 
 public class ProfileDB extends SQLiteOpenHelper {
@@ -68,6 +69,10 @@ public class ProfileDB extends SQLiteOpenHelper {
     public static final String lCol_1 = "WeeklyCalories";
     public static final String lCol_2 = "WeeklyWeight";
 
+    public static final String Table_LinearRegression = "LinearRegression";
+    public static final String zCol_1 = "WeightChange";
+    public static final String zCol_2 = "WeeklyCalories";
+
     public ProfileDB(Context context ) {
         super(context, DB_Name, null, 1);
     }
@@ -84,6 +89,8 @@ public class ProfileDB extends SQLiteOpenHelper {
         db.execSQL("create table " + ExerciseTable_3 + " (ID INTEGER PRIMARY KEY AUTOINCREMENT,Weight INTEGER, DAY INTEGER)");
         db.execSQL("create table " + ExerciseTable_4 + " (ID INTEGER PRIMARY KEY AUTOINCREMENT,Weight INTEGER, DAY INTEGER)");
         db.execSQL("create table " + ExerciseTable_5 + " (ID INTEGER PRIMARY KEY AUTOINCREMENT,Weight INTEGER, DAY INTEGER)");
+        db.execSQL("create table " + Table_LinearRegression + " (ID INTEGER PRIMARY KEY AUTOINCREMENT,WeightChange DOUBLE, WeeklyCalories INTEGER)");
+
     }//executes query put as argument
 
     @Override
@@ -270,6 +277,41 @@ public class ProfileDB extends SQLiteOpenHelper {
     public Cursor getProfileData() {
         SQLiteDatabase db1 = this.getWritableDatabase();
         String query = "SELECT * FROM " + Table_1;
+        Cursor data = db1.rawQuery(query, null);
+        return data;
+    }
+
+    public void addFirstLinearRegression(double []l, double[]y){
+            double caloriesWeek = caloriesWeekly();//gets the weekly calories from method
+            SQLiteDatabase db = this.getWritableDatabase();
+
+            for (int i =0; i<l.length; i++){
+                ContentValues cv = new ContentValues();
+                cv.put(zCol_1, y[i]);
+                cv.put(zCol_2, l[i]);
+                db.insert(Table_LinearRegression, null, cv);
+            }
+
+      /*  ContentValues contentValues = new ContentValues();
+        contentValues.put(lCol_1, caloriesWeek);
+        contentValues.put(lCol_2, weightWeek);//adds weekly calories and weekly weight to the week table
+
+        Log.i(TAG, "addExerciseData: Adding " + caloriesWeek + " " + Table_5);
+        long result = db.insert(Table_5, null, contentValues);
+       */
+    }
+
+    public void addLinearRegression(double currentCalories, double weightChange) {
+        double caloriesWeek = caloriesWeekly();//gets the weekly calories from method
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put(zCol_1, weightChange);
+        cv.put(zCol_2, currentCalories);
+        db.insert(Table_LinearRegression, null, cv);
+    }
+    public Cursor getLinearRegression() {
+        SQLiteDatabase db1 = this.getWritableDatabase();
+        String query = "SELECT * FROM " + Table_LinearRegression;
         Cursor data = db1.rawQuery(query, null);
         return data;
     }

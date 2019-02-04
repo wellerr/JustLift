@@ -23,29 +23,53 @@ public class LinearRegression extends AppCompatActivity {//     This class perfo
        Intent i = getIntent();
        double userBMR = i.getDoubleExtra("Calories", 0);
 
-
-
-
-
        Log.i(TAG, Double.toString(userBMR));
        caloriesText =  findViewById(R.id.caloriesUpdate);
        double calories = userBMR;
        db = new ProfileDB(getApplicationContext());
 
-      Cursor c = db.getWeeklyTable();
-      int x = c.getCount();
+      Cursor c = db.getWeeklyTable();//gets weekly calories and weekly weight
+      Cursor z;
+      Cursor j = db.getProfileData();
+      int x = c.getCount();//use this number to compare current weight to last weeks
+      int lastweek;
+      int currentweek;
+      double weightChange;
       if(x == 1){
-          double x1,x2,x3,x4,x5;//these will be initial x values, calculated from user calories
-          double y1,y2,y3,y4,y5;//initial y values calculated from user weight
-          double[] l = {17500, 19250, 21000, 22750, 24500};
-          double[] y = {0, 0.5, 1, 1.5, 2};
+          c.moveToFirst();
+          double firstWeightChange = c.getInt(2);//column for weekly weight
+          double Calories = c.getInt(1);
+          j.moveToFirst();
+          double originalWeight = j.getInt(5);//column for profile weight
+          weightChange = 2.2* (firstWeightChange - originalWeight);//finds weight change converts to lbs
+
+          //this has to be done as no records to compare in weekly weight so starting
+          // weight from profile table is used
+
+          Log.i(TAG, "first weight change = " + weightChange);
+          double weeklyBMR =  userBMR * 7;
+          double[] l = {Calories, weeklyBMR, weeklyBMR+1750, weeklyBMR+3500, weeklyBMR+5250, weeklyBMR+7000};
+          double[] y = {weightChange, 0, 0.5, 1, 1.5, 2};
+          db.addFirstLinearRegression(l, y);
+          z = db.getLinearRegression();
+          }
+        /*if more than 1 week passed, compares past data from the
+           weekly table rather than reading from profile table
+         */
+        else {//this adds correct data to linear regression table (if there is previous data)
+          lastweek = x - 2;//if more than 1 week, last week is previous row.
+          currentweek = x - 1;
+          c.moveToPosition(lastweek);
+          int lastweekWeight = c.getInt(2);
+          c.moveToPosition(currentweek);
+          int currentWeight = c.getInt(2);//gets last 2 entries of weight from the user
           //if first weight change log, add the standard linear regression data to table
+          int currentCalories = c.getInt(1);
+          weightChange = 2.2 * (currentWeight - lastweekWeight);
+          db.addLinearRegression(currentCalories, weightChange);
+         // Log.i(TAG, Integer.toString(lastweekWeight) + " " + Integer.toString(currentWeight));
+          caloriesText.setText(Double.toString(calories));
       }
-        Log.i(TAG, Integer.toString(x));
-
-       caloriesText.setText(Double.toString(calories));
-
-
        int timeOut = 3000;
        Handler handler = new Handler();// this handler allows app to wait 5 seconds
         // to allow loading splash screen before going to calc
