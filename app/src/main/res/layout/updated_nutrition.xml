@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:gravity="center"
-        android:text="Your updated BMR has been calculated to be:"
+        android:text="Your updated caloric requirement has been calculated to be:"
         android:textColor="@color/colorTextBody" />
     <TextView
         android:id="@+id/caloriesUpdate"
