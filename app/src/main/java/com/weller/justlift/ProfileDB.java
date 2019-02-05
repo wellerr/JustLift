@@ -263,7 +263,7 @@ public class ProfileDB extends SQLiteOpenHelper {
 
     public int getDayCount(Context context){
         SharedPreferences sp = context.getApplicationContext().getSharedPreferences("dayCount", 0);//0 is private mode
-        int dayCount =sp.getInt("dayCount", 0);// gets int stored for day count
+        int dayCount =sp.getInt("dayCount", 1);// gets int stored for day count
         return dayCount;
     }
 

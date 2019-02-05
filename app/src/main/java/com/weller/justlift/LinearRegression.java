@@ -36,8 +36,27 @@ public class LinearRegression extends AppCompatActivity {//     This class perfo
         int x = c.getCount();//use this number to compare current weight to last weeks
         int lastweek;
         int currentweek;
-        double caloriesNeeded;
+        String caloriesNeeded;
         double weightChange;
+        double rateChange = 0;
+        j.moveToFirst();
+        String activity = j.getString(8);
+
+        Log.i(TAG, activity);
+        switch(activity) {
+            case "Slow Gains (0.5lbs a week)":
+                rateChange = 0.5;
+                break;
+            case "Standard Gains (1lb a week)":
+                rateChange = 1;
+                break;
+            case "Faster Gains (1.5lbs a week)s":
+                rateChange = 1.5;
+                break;
+            case "Extreme Gains (2lbs a week)":
+                rateChange = 2;
+                break;
+        }
         if (x == 1) {
             c.moveToFirst();
             double firstWeightChange = c.getInt(2);//column for weekly weight
@@ -55,8 +74,8 @@ public class LinearRegression extends AppCompatActivity {//     This class perfo
             double[] y = {weightChange, 0, 0.5, 1, 1.5, 2};
             db.addFirstLinearRegression(l, y);
             z = db.getLinearRegression();
-            caloriesNeeded = Calculate(db);
-            caloriesText.setText(Double.toString(caloriesNeeded));
+            caloriesNeeded = Calculate(db, rateChange);
+            caloriesText.setText(caloriesNeeded);
         }
         /*if more than 1 week passed, compares past data from the
            weekly table rather than reading from profile table
@@ -73,8 +92,8 @@ public class LinearRegression extends AppCompatActivity {//     This class perfo
             weightChange = 2.2 * (currentWeight - lastweekWeight);
             db.addLinearRegression(currentCalories, weightChange);
             // Log.i(TAG, Integer.toString(lastweekWeight) + " " + Integer.toString(currentWeight));
-            caloriesNeeded = Calculate(db);
-            caloriesText.setText(Double.toString(caloriesNeeded));
+            caloriesNeeded = Calculate(db, rateChange);
+            caloriesText.setText(caloriesNeeded);
         }
 
         int timeOut = 3000;
@@ -89,7 +108,8 @@ public class LinearRegression extends AppCompatActivity {//     This class perfo
 
     }
 
-    public Double Calculate(ProfileDB db) {
+    public String Calculate(ProfileDB db, double rateChange) {
+        //This method performs linear regression
 
         double intercept, slope;
 
@@ -104,7 +124,6 @@ public class LinearRegression extends AppCompatActivity {//     This class perfo
 	        }
 
         int n = x.size();
-
         double sumx = 0.0, sumy = 0.0, sumx2 = 0.0;
         for (int i = 0; i < n; i++) {
             sumx += x.get(i);
@@ -114,10 +133,9 @@ public class LinearRegression extends AppCompatActivity {//     This class perfo
         double xbar = sumx / n;
         double ybar = sumy / n;
 
-        double xxbar = 0.0, yybar = 0.0, xybar = 0.0;
+        double xxbar = 0.0, xybar = 0.0;
         for (int i = 0; i < n; i++) {
             xxbar += (x.get(i) - xbar) * (x.get(i) - xbar);
-            yybar += (y.get(i) - ybar) * (y.get(i) - ybar);
             xybar += (x.get(i) - xbar) * (y.get(i) - ybar);
         }
         slope = xybar / xxbar;
@@ -125,8 +143,9 @@ public class LinearRegression extends AppCompatActivity {//     This class perfo
 
         DecimalFormat value = new DecimalFormat("#.##");
 
-        double caloriesNeeded = (0.5/slope) - intercept;
+        double caloriesNeeded = ((rateChange - intercept)/slope)/7;// y=mx+c rearranged to m = y-c/x to calculate calories
         Log.i("Linear Regression", value.format(caloriesNeeded));
-        return  caloriesNeeded;
+        String calories = value.format(caloriesNeeded);
+        return  calories;
     }
 }
