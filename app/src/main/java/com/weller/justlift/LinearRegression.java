@@ -36,7 +36,7 @@ public class LinearRegression extends AppCompatActivity {//     This class perfo
         int x = c.getCount();//use this number to compare current weight to last weeks
         int lastweek;
         int currentweek;
-        String caloriesNeeded;
+        final String caloriesNeeded;
         double weightChange;
         double rateChange = 0;
         j.moveToFirst();
@@ -102,6 +102,7 @@ public class LinearRegression extends AppCompatActivity {//     This class perfo
         handler.postDelayed(new Runnable() {
             public void run() {
                 Intent intent = new Intent(LinearRegression.this, MainActivity.class);
+                intent.putExtra("UpdatedCalories", caloriesNeeded);
                 startActivity(intent);
             }
         }, timeOut);//the time delay set

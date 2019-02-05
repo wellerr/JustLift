@@ -11,6 +11,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.widget.TextView;
 
@@ -29,6 +30,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         myDB = new ProfileDB(getApplicationContext());
         Cursor profileData = myDB.getProfileData();
         if(profileData!=null && profileData.getCount()>0){//if user has already got a profile...
+           String calories = "null";
+            if(getIntent().hasExtra("UpdatedCalories")){
+                calories = getIntent().getStringExtra("UpdatedCalories");
+            }
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                     new NutritionFragment()).commit();
         }
