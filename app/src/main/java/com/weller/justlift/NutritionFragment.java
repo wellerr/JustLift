@@ -83,9 +83,9 @@ public class NutritionFragment extends Fragment {
             editor.commit();//Adds the calories extra passed from linear regression class to the shared prefs of the app
         }
         double totalCalories = totalCalories();
-        setCalories.setText(Double.toString(totalCalories));//sets textview to the total calculated
+        setCalories.setText(String.valueOf((int)totalCalories));//sets textview to the total calculated
         double totalProtein = totalProtein();
-        setProtein.setText(Double.toString(totalProtein));
+        setProtein.setText(String.valueOf((int)totalProtein)+ "g");
         caloriesLeft = profileData(totalCalories, totalProtein);
 
 
@@ -260,7 +260,7 @@ public class NutritionFragment extends Fragment {
                     break;
             }
         }
-        setRemainingCalories.setText(Double.toString(caloriesLeft - remainingCalories));
+        setRemainingCalories.setText(String.valueOf((int)(caloriesLeft - remainingCalories)));
         return  BMR;
        }
 
@@ -299,7 +299,7 @@ public class NutritionFragment extends Fragment {
         double proteinLeft;
         int weight = Integer.parseInt(profile.get(2));
         proteinLeft = weight *1.7;
-        setRemainingProtein.setText(Double.toString(proteinLeft - remainingProtein));
+        setRemainingProtein.setText(String.valueOf((int)(proteinLeft - remainingProtein)) + "g");
     }
 
     private void showAddItemDialog(final Context context) {

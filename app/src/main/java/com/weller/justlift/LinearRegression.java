@@ -144,7 +144,8 @@ public class LinearRegression extends AppCompatActivity {//     This class perfo
 
         DecimalFormat value = new DecimalFormat("#.##");
 
-        double caloriesNeeded = ((rateChange - intercept)/slope)/7;// y=mx+c rearranged to m = y-c/x to calculate calories
+        double doubleCaloriesNeeded = ((rateChange - intercept)/slope)/7;// y=mx+c rearranged to m = y-c/x to calculate calories
+        int caloriesNeeded = (int) Math.round(doubleCaloriesNeeded);
         Log.i("Linear Regression", value.format(caloriesNeeded));
         String calories = value.format(caloriesNeeded);
         return  calories;
