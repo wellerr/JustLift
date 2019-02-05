@@ -239,63 +239,12 @@ public class NutritionFragment extends Fragment {
         prefs = getContext().getSharedPreferences(ShareName, Context.MODE_PRIVATE);
 
         if(prefs.contains("Calories")){
-            switch (gender) {
-                case "Male":
-                    caloriesLeft = ((10 * weight) + (6.25 * height) - (5 * age) + 5);//male mifflin st jeor equation
-                    break;
-                case "Female":
-                    caloriesLeft = ((10 * weight) + (6.25 * height) - (5 * age) - 161);//female mifflin st jeor
-                    break;
-            }
-
-            switch (activity) {
-                case "Sedentary (little to no exercise)"://these string values are copied from the spinner string values
-                    caloriesLeft = caloriesLeft * 1.2;
-                    break;
-                case "Lightly Active (intense exercise once or twice a week)":
-                    caloriesLeft = caloriesLeft * 1.375;
-                    break;
-                case "Moderately Active (intense exercise 3 to 4 times a week)":
-                    caloriesLeft = caloriesLeft * 1.550;
-                    break;
-                case "Very Active (intense exercise 5 to 7 times a week)":
-                    caloriesLeft = caloriesLeft * 1.725;
-                    break;
-                case "Extremely Active (very active + a physically demanding daily schedule)":
-                    caloriesLeft = caloriesLeft * 1.9;
-                    break;
-            }
-            BMR = caloriesLeft;
+            BMR = switchStatement(gender,activity, caloriesLeft, height, age, weight);
             caloriesLeft = Double.valueOf(prefs.getFloat("Calories",0.0f));
         }
         else {
-            switch (gender) {
-                case "Male":
-                    caloriesLeft = ((10 * weight) + (6.25 * height) - (5 * age) + 5);//male mifflin st jeor equation
-                    break;
-                case "Female":
-                    caloriesLeft = ((10 * weight) + (6.25 * height) - (5 * age) - 161);//female mifflin st jeor
-                    break;
-            }
-
-            switch (activity) {
-                case "Sedentary (little to no exercise)"://these string values are copied from the spinner string values
-                    caloriesLeft = caloriesLeft * 1.2;
-                    break;
-                case "Lightly Active (intense exercise once or twice a week)":
-                    caloriesLeft = caloriesLeft * 1.375;
-                    break;
-                case "Moderately Active (intense exercise 3 to 4 times a week)":
-                    caloriesLeft = caloriesLeft * 1.550;
-                    break;
-                case "Very Active (intense exercise 5 to 7 times a week)":
-                    caloriesLeft = caloriesLeft * 1.725;
-                    break;
-                case "Extremely Active (very active + a physically demanding daily schedule)":
-                    caloriesLeft = caloriesLeft * 1.9;
-                    break;
-            }
-            BMR = caloriesLeft;
+            BMR = switchStatement(gender,activity, caloriesLeft, height, age, weight);
+            caloriesLeft = switchStatement(gender,activity, caloriesLeft, height, age, weight);
             switch (gains) {
                 case "Slow Gains (0.5lbs a week)":
                     caloriesLeft += 250;
@@ -313,6 +262,37 @@ public class NutritionFragment extends Fragment {
         }
         setRemainingCalories.setText(Double.toString(caloriesLeft - remainingCalories));
         return  BMR;
+       }
+
+       public double switchStatement(String gender, String activity, Double caloriesLeft, int height, int age, int weight){
+
+        switch (gender) {
+               case "Male":
+                   caloriesLeft = ((10 * weight) + (6.25 * height) - (5 * age) + 5);//male mifflin st jeor equation
+                   break;
+               case "Female":
+                   caloriesLeft = ((10 * weight) + (6.25 * height) - (5 * age) - 161);//female mifflin st jeor
+                   break;
+           }
+
+           switch (activity) {
+               case "Sedentary (little to no exercise)"://these string values are copied from the spinner string values
+                   caloriesLeft = caloriesLeft * 1.2;
+                   break;
+               case "Lightly Active (intense exercise once or twice a week)":
+                   caloriesLeft = caloriesLeft * 1.375;
+                   break;
+               case "Moderately Active (intense exercise 3 to 4 times a week)":
+                   caloriesLeft = caloriesLeft * 1.550;
+                   break;
+               case "Very Active (intense exercise 5 to 7 times a week)":
+                   caloriesLeft = caloriesLeft * 1.725;
+                   break;
+               case "Extremely Active (very active + a physically demanding daily schedule)":
+                   caloriesLeft = caloriesLeft * 1.9;
+                   break;
+           }
+           return caloriesLeft;
        }
     public  void calculateProteinLeft (ArrayList<String> profile, double remainingProtein){
         //Recommended 1.4 to 2g per kg body weight for strength training
