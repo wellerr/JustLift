@@ -10,21 +10,6 @@
     android:padding="5dp"
     >
 
-    <android.support.design.widget.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:errorEnabled="true">
-
-    </android.support.design.widget.TextInputLayout>
-
-
-    <android.support.design.widget.TextInputLayout
-
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:errorEnabled="true">
-
-    </android.support.design.widget.TextInputLayout>
 
     <android.support.design.widget.TextInputLayout
 
@@ -55,26 +40,34 @@
     </LinearLayout>
 
     <TableLayout
-        android:layout_width="wrap_content"
-        android:layout_height="126dp"
-        android:layout_gravity="right">
+        android:layout_width="260dp"
+        android:layout_height="86dp"
+        android:layout_gravity="center"
+        android:layout_marginVertical="10dp"
+        android:background="@color/colorPrimaryDark">
 
         <TableRow
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
             <TextView
-                android:layout_gravity="center_horizontal"
+                android:layout_marginVertical="1dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginBottom="1dp"
+                android:gravity="center"
                 android:text="Total Calories"
                 android:textColor="@color/colorTextBody"
-                android:textStyle="bold"/>
+                android:textStyle="bold" />
 
             <TextView
-                android:layout_gravity="center_horizontal"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginBottom="1dp"
+                android:gravity="center"
                 android:text="Total Protein"
                 android:textColor="@color/colorTextBody"
-                android:textStyle="bold"
-                />
+                android:textStyle="bold" />
         </TableRow>
 
         <TableRow
@@ -83,13 +76,23 @@
 
             <TextView
                 android:id="@+id/setCalories"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginBottom="1dp"
+                android:background="@color/colorBackground"
+                android:gravity="center"
                 android:text="Calories Not Set"
-                android:textColor="@color/colorTextBody"/>
+                android:textColor="@color/colorTextBody" />
 
             <TextView
                 android:id="@+id/setProtein"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginBottom="1dp"
+                android:background="@color/colorBackground"
+                android:gravity="center"
                 android:text="Protein Not Set"
-                android:textColor="@color/colorTextBody"/>
+                android:textColor="@color/colorTextBody" />
         </TableRow>
 
         <TableRow
@@ -98,16 +101,23 @@
 
             <TextView
                 android:layout_gravity="center_horizontal"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginBottom="1dp"
+                android:gravity="center"
                 android:text="Calories Remaining"
-                android:textStyle="bold"
-                android:textColor="@color/colorTextBody"/>
+                android:textColor="@color/colorTextBody"
+                android:textStyle="bold" />
 
             <TextView
                 android:layout_gravity="center_horizontal"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginBottom="1dp"
+                android:gravity="center"
                 android:text="Protein Remaining"
-                android:textStyle="bold"
                 android:textColor="@color/colorTextBody"
-                />
+                android:textStyle="bold" />
         </TableRow>
 
         <TableRow
@@ -116,13 +126,23 @@
 
             <TextView
                 android:id="@+id/setRemainingCalories"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginBottom="1dp"
+                android:background="@color/colorBackground"
+                android:gravity="center"
                 android:text="Calories Not Set"
-                android:textColor="@color/colorTextBody"/>
+                android:textColor="@color/colorTextBody" />
 
             <TextView
                 android:id="@+id/setRemainingProtein"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginBottom="1dp"
+                android:background="@color/colorBackground"
+                android:gravity="center"
                 android:text="Protein Not Set"
-                android:textColor="@color/colorTextBody"/>
+                android:textColor="@color/colorTextBody" />
         </TableRow>
     </TableLayout>
 
@@ -131,6 +151,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Complete Day"
-        android:textColor="@color/colorPrimary"/>
+        android:textColor="@color/colorPrimary" />
 
 </LinearLayout>

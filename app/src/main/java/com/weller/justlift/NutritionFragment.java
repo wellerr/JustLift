@@ -316,7 +316,7 @@ public class NutritionFragment extends Fragment {
                         if (taskEditText.getText().toString().isEmpty()){
                             Toast.makeText(context, "Enter weight", Toast.LENGTH_LONG).show();
                         }
-                        else {
+                        else if(taskEditText.getText().toString().isEmpty() == false) {
                             int updatedWeight = Integer.parseInt(taskEditText.getText().toString());
                             dayCount++;//when added daycount increments
                             db.updateDayCount(getContext(), dayCount);//updates daycount
