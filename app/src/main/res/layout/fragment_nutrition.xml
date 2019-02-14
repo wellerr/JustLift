@@ -28,6 +28,47 @@
 
     <LinearLayout
         android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:layout_marginTop="10dp">
+
+        <TextView
+            android:id="@+id/textView1"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_gravity=""
+            android:layout_weight="33.3"
+            android:text="Meal Name"
+            android:textAlignment="center"
+            android:textColor="@color/colorTextBody"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_gravity="top"
+            android:layout_weight="33.3"
+            android:text="Calories"
+            android:textAlignment="center"
+            android:textColor="@color/colorTextBody"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_gravity="top"
+            android:layout_weight="33.3"
+            android:text="Protein"
+            android:textAlignment="center"
+            android:textColor="@color/colorTextBody"
+            android:textStyle="bold" />
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="319dp"
         android:orientation="vertical">
 
