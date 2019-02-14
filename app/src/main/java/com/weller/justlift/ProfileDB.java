@@ -67,7 +67,7 @@ public class ProfileDB extends SQLiteOpenHelper {
 
     public static final String Table_5 = "Calorie_Calc";
     public static final String lCol_1 = "WeeklyCalories";
-    public static final String lCol_2 = "WeeklyWeight";
+    public static final String lCol_2 = "AddWeeklyWeight";
 
     public static final String Table_LinearRegression = "LinearRegression";
     public static final String zCol_1 = "WeightChange";

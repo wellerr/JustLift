@@ -40,7 +40,7 @@ public class SplashScreen extends AppCompatActivity {
             setContentView(view);
         }
         else{//if screen loads when user logs weight after 1 week
-            int timeOut = 5000;
+            int timeOut = 2500;
             EasySplashScreen config = new EasySplashScreen(SplashScreen.this)
                     .withFullScreen()
                     .withTargetActivity(MainActivity.class)

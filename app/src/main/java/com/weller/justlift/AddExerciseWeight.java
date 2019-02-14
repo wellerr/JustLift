@@ -7,6 +7,7 @@ import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -33,6 +34,7 @@ public class AddExerciseWeight extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_workout_record_layout);
+        getWindow().setLayout(MainActivity.displayWidth, ViewGroup.LayoutParams.WRAP_CONTENT);
         addWeight = findViewById(R.id.recordWeightButton);
         exerciseWeightEditText = findViewById(R.id.text_exercise);
         final int posValue = getIntent().getIntExtra("pos", 0); //gets position of the listview starting from 0

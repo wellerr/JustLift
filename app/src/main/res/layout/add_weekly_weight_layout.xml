@@ -10,23 +10,33 @@
     android:layout_centerVertical="true"
     android:layout_centerHorizontal="true"
     >
+
+    <TextView
+        android:id="@+id/textView6"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Please update your weight before continuing"
+        android:textColor="@color/colorTextBody" />
+
     <android.support.design.widget.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColorHint="@color/colorTextBody"
         app:errorEnabled="true">
+
         <android.support.design.widget.TextInputEditText
-            android:id="@+id/text_exercise"
+            android:id="@+id/text_weight"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Name of Exercise"
+            android:hint="Weight(KG)"
             android:inputType="text"
             android:textColor="@color/colorTextBody" />
     </android.support.design.widget.TextInputLayout>
+
     <Button
-        android:id="@+id/addExerciseButton"
+        android:id="@+id/addUserWeight"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:onClick="onClick"
-        android:text="Add Exercise" />
+        android:text="Update Weight" />
 </LinearLayout>
