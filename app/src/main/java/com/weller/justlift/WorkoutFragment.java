@@ -71,6 +71,7 @@ public class WorkoutFragment extends Fragment {
                 startActivityForResult(intent,10001);
             }
         });
+
         return v;
     }
 

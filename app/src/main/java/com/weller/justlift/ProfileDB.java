@@ -178,6 +178,7 @@ public class ProfileDB extends SQLiteOpenHelper {
             return true;
         }
     }
+
     public boolean addExerciseWeight(String tableName, int exerciseWeight, int dayCount){
         SQLiteDatabase db = this.getWritableDatabase();
 
@@ -372,5 +373,7 @@ public class ProfileDB extends SQLiteOpenHelper {
         SQLiteDatabase db1 = this.getWritableDatabase();
         db1.execSQL("create table " + Table_2 + " (ID INTEGER PRIMARY KEY AUTOINCREMENT,MealName TEXT,Calories INTEGER,Protein INTEGER)");
     }
+
+
 
 }

@@ -20,8 +20,10 @@
             android:screenOrientation="portrait"/>
         <activity android:name=".LinearRegression"/>
         <activity android:name=".AddMeal"
+            android:label="Add Meal"
             android:theme="@style/AppTheme.Dialog"/>
         <activity android:name=".AddExercise"
+            android:label="Add Exercise"
             android:theme="@style/AppTheme.Dialog"/>
         <activity android:name=".AddExerciseWeight"
             android:theme="@style/AppTheme.Dialog"/>
@@ -31,6 +33,7 @@
         <activity android:name=".SignUp2"/>
         <activity android:name=".ListActivity"></activity>
         <activity android:name=".AddWeeklyWeight"
+            android:label="Add Weight"
             android:theme="@style/AppTheme.Dialog"/>
     </application>
 
