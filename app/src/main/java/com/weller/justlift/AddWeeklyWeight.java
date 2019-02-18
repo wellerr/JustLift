@@ -29,7 +29,7 @@ public class AddWeeklyWeight extends AppCompatActivity{
         updateWeightText = findViewById(R.id.text_weight);
         db = new ProfileDB(getApplicationContext());
         Intent intent = getIntent();
-        caloriesLeft = intent.getIntExtra("caloriesLeft", 0);
+        caloriesLeft = intent.getDoubleExtra("caloriesLeft", 0);
 
 
         updateWeightButton.setOnClickListener(new View.OnClickListener() {
@@ -49,6 +49,7 @@ public class AddWeeklyWeight extends AppCompatActivity{
                 Intent i = new Intent(AddWeeklyWeight.this, SplashScreen.class);
                 i.putExtra("Code", 1);//passes code into splash screen that tells
                 i.putExtra("Calories", caloriesLeft);
+
                 //splash screen it is performing linear regression algorithm
                 startActivity(i);
             }

@@ -59,6 +59,7 @@ public class SplashScreen extends AppCompatActivity {
             handler.postDelayed(new Runnable() {
                 public void run() {
                     Intent intent = new Intent(SplashScreen.this, LinearRegression.class);
+                    Log.i(TAG, "Calories tag = " + Double.toString(calories));
                     intent.putExtra("Calories", calories);//sends users needed calories to linear regression
                     startActivity(intent);
                 }

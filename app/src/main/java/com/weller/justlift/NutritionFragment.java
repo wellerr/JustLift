@@ -121,6 +121,7 @@ public class NutritionFragment extends Fragment {
             //showAddItemDialog(getContext());//if end of week ask for user to enter weight
             Intent intent = new Intent(getContext(), AddWeeklyWeight.class);
             intent.putExtra("caloriesLeft", caloriesLeft);
+            Log.i(TAG, Double.toString(caloriesLeft));
             startActivity(intent);
             //then sum the past meals table for calories and put into weekly
             //then clear past meals table

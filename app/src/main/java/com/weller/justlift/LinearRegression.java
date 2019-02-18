@@ -25,7 +25,7 @@ public class LinearRegression extends AppCompatActivity {//     This class perfo
         Intent i = getIntent();
         double userBMR = i.getDoubleExtra("Calories", 0);
 
-        Log.i(TAG, Double.toString(userBMR));
+        Log.i(TAG, "USER BMR " + Double.toString(userBMR));
         caloriesText = findViewById(R.id.caloriesUpdate);
         double calories = userBMR;
         db = new ProfileDB(getApplicationContext());
