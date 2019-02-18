@@ -83,7 +83,7 @@ public class ProfileDB extends SQLiteOpenHelper {
         db.execSQL("create table " + Table_2 + " (ID INTEGER PRIMARY KEY AUTOINCREMENT,MealName TEXT,Calories INTEGER,Protein INTEGER, Day INTEGER)");
         db.execSQL("create table " + Table_3 + " (ID INTEGER PRIMARY KEY AUTOINCREMENT,MealName TEXT,Calories INTEGER,Protein INTEGER, Day INTEGER)");
         db.execSQL("create table " + Table_4 + " (ID INTEGER PRIMARY KEY AUTOINCREMENT,ExerciseName TEXT)");
-        db.execSQL("create table " + Table_5 + " (ID INTEGER PRIMARY KEY AUTOINCREMENT,WeeklyCalories DOUBLE, WeeklyWeight DOUBLE)");
+        db.execSQL("create table " + Table_5 + " (ID INTEGER PRIMARY KEY AUTOINCREMENT,WeeklyCalories DOUBLE, AddWeeklyWeight DOUBLE)");
         db.execSQL("create table " + ExerciseTable_1 + " (ID INTEGER PRIMARY KEY AUTOINCREMENT,Weight INTEGER, DAY INTEGER)");
         db.execSQL("create table " + ExerciseTable_2 + " (ID INTEGER PRIMARY KEY AUTOINCREMENT,Weight INTEGER, DAY INTEGER)");//setting up 5 exercise tables will increase later in development
         db.execSQL("create table " + ExerciseTable_3 + " (ID INTEGER PRIMARY KEY AUTOINCREMENT,Weight INTEGER, DAY INTEGER)");
@@ -178,7 +178,6 @@ public class ProfileDB extends SQLiteOpenHelper {
             return true;
         }
     }
-
     public boolean addExerciseWeight(String tableName, int exerciseWeight, int dayCount){
         SQLiteDatabase db = this.getWritableDatabase();
 
@@ -373,7 +372,5 @@ public class ProfileDB extends SQLiteOpenHelper {
         SQLiteDatabase db1 = this.getWritableDatabase();
         db1.execSQL("create table " + Table_2 + " (ID INTEGER PRIMARY KEY AUTOINCREMENT,MealName TEXT,Calories INTEGER,Protein INTEGER)");
     }
-
-
 
 }

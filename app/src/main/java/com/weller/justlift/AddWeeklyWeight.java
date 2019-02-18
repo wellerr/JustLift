@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -15,7 +16,8 @@ public class AddWeeklyWeight extends AppCompatActivity{
     TextInputEditText updateWeightText;
     public ProfileDB db;
     int dayCount;
-    int caloriesLeft;
+    double caloriesLeft;
+    String TAG = "AddWeeklyWeight";
 
 
     @Override
@@ -38,6 +40,7 @@ public class AddWeeklyWeight extends AppCompatActivity{
             }
             else if(updateWeightText.getText().toString().isEmpty() == false) {
                 int updatedWeight = Integer.parseInt(updateWeightText.getText().toString());
+                    Log.i(TAG, Integer.toString(updatedWeight));
                 dayCount++;//when added daycount increments
                 db.updateDayCount(getApplicationContext(), dayCount);//updates daycount
                 db.addToWeeklyTable(updatedWeight);//adds weight to the weekly table

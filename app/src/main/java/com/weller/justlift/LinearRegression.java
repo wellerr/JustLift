@@ -57,6 +57,7 @@ public class LinearRegression extends AppCompatActivity {//     This class perfo
                 rateChange = 2;
                 break;
         }
+        Log.i(TAG, "x is " + Integer.toString(x));
         if (x == 1) {
             c.moveToFirst();
             double firstWeightChange = c.getInt(2);//column for weekly weight
@@ -82,7 +83,9 @@ public class LinearRegression extends AppCompatActivity {//     This class perfo
          */
         else {//this adds correct data to linear regression table (if there is previous data)
             lastweek = x - 2;//if more than 1 week, last week is previous row.
+            Log.i(TAG, Integer.toString(lastweek));
             currentweek = x - 1;
+            Log.i(TAG, Integer.toString(currentweek));
             c.moveToPosition(lastweek);
             int lastweekWeight = c.getInt(2);
             c.moveToPosition(currentweek);
