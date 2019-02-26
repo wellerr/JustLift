@@ -17,7 +17,6 @@ import android.widget.Toast;
 
 public class ProfileFragment extends Fragment implements AdapterView.OnItemSelectedListener {
 
-
     ProfileDB db;
     String tableName = "Profile_table";
 
@@ -40,16 +39,14 @@ public class ProfileFragment extends Fragment implements AdapterView.OnItemSelec
     String genderString;
     String gainsString;
 
-
     @Override
-
-
 
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_profile, container, false);
     /*issue i was having was not saving fragment as view and returning
        I needed to use this view as the context for the spinner as seen below
      */
+    //first it initialises the elements on the fragment
         firstNameEditText = v.findViewById(R.id.text_firstname);
         surnameEditText = v.findViewById(R.id.text_surname);
         ageEditText = v.findViewById(R.id.text_age);
@@ -58,20 +55,20 @@ public class ProfileFragment extends Fragment implements AdapterView.OnItemSelec
 
 
         spinner_gender = v.findViewById(R.id.spinner_gender);
-        ArrayAdapter<CharSequence> adapter_gender = ArrayAdapter.createFromResource(v.getContext(), R.array.sex, R.layout.my_spinner);
-        adapter_gender.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        ArrayAdapter<CharSequence> adapter_gender = ArrayAdapter.createFromResource(v.getContext(), R.array.sex, R.layout.my_spinner);//sets spinner to my_spinner.xml with values from array in xml
+        adapter_gender.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item); //sets drop down view of the spinner
         spinner_gender.setAdapter(adapter_gender);
         spinner_gender.setOnItemSelectedListener(this);
         // this spinner is for the genderString of the user
 
-        spinner_activity = v.findViewById(R.id.spinner_activity);
+        spinner_activity = v.findViewById(R.id.spinner_activity);//repeats above process for activity spinner
         ArrayAdapter<CharSequence> adapter_activity = ArrayAdapter.createFromResource(v.getContext(), R.array.activity, R.layout.my_spinner);
         adapter_activity.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner_activity.setAdapter(adapter_activity);
         spinner_activity.setOnItemSelectedListener(this);
 
 
-        spinner_gains = v.findViewById(R.id.spinner_gains);
+        spinner_gains = v.findViewById(R.id.spinner_gains);//repeats above for gains spinner
         ArrayAdapter<CharSequence> adapter_gains = ArrayAdapter.createFromResource(v.getContext(), R.array.gains, R.layout.my_spinner);
         adapter_activity.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner_gains.setAdapter(adapter_gains);
@@ -85,7 +82,7 @@ public class ProfileFragment extends Fragment implements AdapterView.OnItemSelec
         saveButton.setOnClickListener(new View.OnClickListener() {
 
             @Override
-            public void onClick(View v) {
+            public void onClick(View v) {// when user selects save stores all inputs into variables and then adds to profile
                 firstNameString =   firstNameEditText.getText().toString();
                 surnameString =   surnameEditText.getText().toString();
                 ageString =   ageEditText.getText().toString();
@@ -99,25 +96,25 @@ public class ProfileFragment extends Fragment implements AdapterView.OnItemSelec
                    AddData(firstNameString, surnameString, ageString, heightString, weightString, genderString, activityString, gainsString); //adds fields to database
                 }
                 else{
-                    toastMessage("Enter data");
+                    toastMessage("Enter data");//if not all fields entered, throws a toast message
                 }
             }
         });
         viewButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View v) {//used in testing to view the profile data entered table correctly
                 Intent intent = new Intent(getContext(), com.weller.justlift.ListActivity.class);
                 startActivity(intent);
             }
         });
         return v;
     }
-    public void AddData(String firstName, String surname, String age, String height, String weight, String gender, String activity, String gains) {
-        boolean insertData = db.addProfileData(firstName, surname, age, height, weight, gender, activity, gains);
-        if (insertData) {
+    public void AddData(String firstName, String surname, String age, String height, String weight, String gender, String activity, String gains) {//method responsible for adding profile data to the database
+        boolean insertData = db.addProfileData(firstName, surname, age, height, weight, gender, activity, gains);//calls addProfileData from ProfileDB
+        if (insertData) {//if successful
             toastMessage("Test successful");
         }
-        else {
+        else {//if fails
             toastMessage("Test successful ver 2");
         }
     }
@@ -127,7 +124,7 @@ public class ProfileFragment extends Fragment implements AdapterView.OnItemSelec
     }
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        String text = parent.getItemAtPosition(position).toString();
+        String text = parent.getItemAtPosition(position).toString();//used to tell which part of the listview is selected
     }
 
     @Override
