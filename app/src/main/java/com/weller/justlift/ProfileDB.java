@@ -295,6 +295,7 @@ public class ProfileDB extends SQLiteOpenHelper {
       /*  ContentValues contentValues = new ContentValues();
         contentValues.put(lCol_1, caloriesWeek);
         contentValues.put(lCol_2, weightWeek);//adds weekly calories and weekly weight to the week table
+        contentValues.put(lCol_2, weightWeek);//adds weekly calories and weekly weight to the week table
 
         Log.i(TAG, "addExerciseData: Adding " + caloriesWeek + " " + Table_5);
         long result = db.insert(Table_5, null, contentValues);

@@ -27,16 +27,16 @@ public class ProgressFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_progress, container, false);
-        db = new ProfileDB(getContext());
-        listView = v.findViewById(R.id.listView);
-        populateListView();
+        View v = inflater.inflate(R.layout.fragment_progress, container, false);//sets display to fragment_progress xml
+        db = new ProfileDB(getContext());//initialises ProfileDB class
+        listView = v.findViewById(R.id.listView);//finds list view for exercises to be displayed on
+        populateListView();//calls populatelistview method
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(view.getContext(),ProgressGraph.class);
-                intent.putExtra("pos", position);
+                intent.putExtra("pos", position);//puts position of list view clicked into the progress graph class so that it can tell which graph to show on screen
                 startActivity(intent);
               //  startActivityForResult(intent,10001);
             }
@@ -45,20 +45,20 @@ public class ProgressFragment extends Fragment {
     }
 
     public void populateListView() {
-        Log.d(TAG, "populateListView: Displaying data in the List View.");
+        Log.d(TAG, "populateListView: Displaying data in the List View.");//log for testing purposes
 
-        Cursor data = db.getExerciseNames();
-        ArrayList<String> listData = new ArrayList<>();
-        int col = data.getColumnCount();
-        String column = Integer.toString(col);
+        Cursor data = db.getExerciseNames();//gets names of exercises from database
+        ArrayList<String> listData = new ArrayList<>();//sets up an arraylist to store the exercises in
+        int col = data.getColumnCount();//gets number of columns
+        String column = Integer.toString(col);//converts number to a string
 
-        Log.d(TAG, column);
+        Log.d(TAG, column);//logs column count for testing
         while (data.moveToNext()) {//cursor moves through db
             for(int i=1; i<col; i++) {//iterates through columns retrieving user data
-                listData.add(data.getString(i));
+                listData.add(data.getString(i));//adds exercise to arraylist
             }
-            ListAdapter adapter = new ArrayAdapter<>(getContext(), R.layout.my_text_view, listData);
-            listView.setAdapter(adapter);
+            ListAdapter adapter = new ArrayAdapter<>(getContext(), R.layout.my_text_view, listData);//puts arraylist into my_text_view layout
+            listView.setAdapter(adapter);//displays the info on screen
         }
     }
 }

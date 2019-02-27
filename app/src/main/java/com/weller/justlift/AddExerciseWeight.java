@@ -21,22 +21,19 @@ public class AddExerciseWeight extends AppCompatActivity {
     public ProfileDB db;
     public NutritionFragment nutrition;
 
-
     String exerciseWeight;
 
     private ListView listView;
 
     int dayCount;
 
-
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.add_workout_record_layout);
-        getWindow().setLayout(MainActivity.displayWidth, ViewGroup.LayoutParams.WRAP_CONTENT);
+        setContentView(R.layout.add_workout_record_layout);//sets layout to add_workout_record_layout
+        getWindow().setLayout(MainActivity.displayWidth, ViewGroup.LayoutParams.WRAP_CONTENT);//sets display size to width in main activity
         addWeight = findViewById(R.id.recordWeightButton);
-        exerciseWeightEditText = findViewById(R.id.text_exercise);
+        exerciseWeightEditText = findViewById(R.id.text_exercise);//initialises the elements on screen
         final int posValue = getIntent().getIntExtra("pos", 0); //gets position of the listview starting from 0
         toastMessage(Integer.toString(posValue));//previews the list item selected
         db = new ProfileDB(getApplicationContext());

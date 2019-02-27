@@ -36,19 +36,20 @@ public class SignUp2 extends AppCompatActivity implements AdapterView.OnItemSele
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_signup2);
-        db = new ProfileDB(getApplicationContext());
-        Intent i=getIntent();
+        setContentView(R.layout.activity_signup2);//sets layout to activity_signup2
+        db = new ProfileDB(getApplicationContext());//initialises the database
+        Intent i = getIntent();//gets intent for shared prefs
         firstNameString=i.getStringExtra("firstNameString");
         surnameString=i.getStringExtra("surnameString");
         ageString=i.getStringExtra("ageString");
         heightString=i.getStringExtra("heightString");
         weightString=i.getStringExtra("weightString");
+        //gets all the string values from previous page from shared prefs
 
         submitButton = findViewById(R.id.submitButton);
 
         spinner_gender = findViewById(R.id.spinner_gender);
-        ArrayAdapter<CharSequence> adapter_gender = ArrayAdapter.createFromResource(getApplicationContext(), R.array.sex, R.layout.my_spinner);
+        ArrayAdapter<CharSequence> adapter_gender = ArrayAdapter.createFromResource(getApplicationContext(), R.array.sex, R.layout.my_spinner);//sets spinner content and layout to my_spinner
         adapter_gender.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner_gender.setAdapter(adapter_gender);
         spinner_gender.setOnItemSelectedListener(this);
@@ -68,38 +69,39 @@ public class SignUp2 extends AppCompatActivity implements AdapterView.OnItemSele
 
 
         submitButton = findViewById(R.id.submitButton);
-
+        //above gets all the information entered by the user
 
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View v) {//once submit is pressed by user
                 genderString = spinner_gender.getSelectedItem().toString();
                 activityString = spinner_activity.getSelectedItem().toString();
                 gainsString = spinner_gains.getSelectedItem().toString();
+                //converts all entries to strings
                 if(firstNameString.length()!=0 && surnameString.length()!=0 && ageString.length()!=0 && heightString.length()!=0 &&
                         weightString.length()!=0 && genderString.length()!=0 && activityString.length()!=0 && gainsString.length()!=0){//checks if all fields have been entered
-                    AddData(firstNameString, surnameString, ageString, heightString, weightString, genderString, activityString, gainsString); //adds fields to database
+                    AddData(firstNameString, surnameString, ageString, heightString, weightString, genderString, activityString, gainsString); //adds fields to database by calling adddata method
                 }
                 else{
-                    toastMessage("Enter data");
+                    toastMessage("Enter data");//if a field is empty, error displayed
                 }
-                startActivity(new Intent(SignUp2.this, MainActivity.class));
+                startActivity(new Intent(SignUp2.this, MainActivity.class));//once this had passed, main activity is started
             }
         });
 
     }
 
     public void AddData(String firstName, String surname, String age, String height, String weight, String gender, String activity, String gains) {
-        boolean insertData = db.addProfileData(firstName, surname, age, height, weight, gender, activity, gains);
-        if (insertData) {
-            toastMessage("Test successful");
+        boolean insertData = db.addProfileData(firstName, surname, age, height, weight, gender, activity, gains);//adds all user info to profile, returns true if successful
+        if (insertData) {//if successful
+            toastMessage("Test successful"); // testing logs
         }
-        else {
+        else {//if fails
             toastMessage("Test successful ver 2");
         }
     }
     private void toastMessage(String message){
-        Toast.makeText(this,message, Toast.LENGTH_SHORT).show();
+        Toast.makeText(this,message, Toast.LENGTH_SHORT).show();//method to create a toast message
     }
 
     @Override

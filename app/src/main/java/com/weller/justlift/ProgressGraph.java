@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.widget.TextView;
 
+//Library below is used to display the line graph for the user
 import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.XAxis;
@@ -32,70 +33,67 @@ public class ProgressGraph extends AppCompatActivity implements OnChartGestureLi
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_progress_graph);
-        final int posValue = getIntent().getIntExtra("pos", 0); //gets position of the listview starting from 0
-        db = new ProfileDB(getApplicationContext());
-        mchart = (LineChart) findViewById(R.id.lineChart);
-        Cursor cursor;
-        Cursor exerciseNames = db.getExerciseNames();
-        ArrayList<Entry>yData = new ArrayList<>();
+        setContentView(R.layout.activity_progress_graph);//sets layout to activity_progress_graph
+        final int posValue = getIntent().getIntExtra("pos", 0); //gets position sent from previous class to know what exercise was clicked1
+        db = new ProfileDB(getApplicationContext());//initialises database
+        mchart = (LineChart) findViewById(R.id.lineChart);//initiates linechart
+        Cursor c;//sets up a cursor to iterate through table
+        ArrayList<Entry>yData = new ArrayList<>();//sets up arraylist for the y axis data
 
-          switch (posValue){//if position of listvalue, enter into specific table
-
+          switch (posValue){//runs particular code based on what position of the listview in progressfragment was selected
                         case 0:
-                            cursor = db.getExerciseData(db.ExerciseTable_1);//sets cursor to first exercise
-                            yData = addData(cursor);//sets ydata to the information read from the cursor
+                            c = db.getExerciseData(db.ExerciseTable_1);//sets cursor to first exercise table
+                            yData = addData(c);//sets ydata to the information read from the cursor
                             break;//breaks out of switch and sends the ydata to the next part of code
                         case 1:
-                            cursor = db.getExerciseData(db.ExerciseTable_2);
-                            yData = addData(cursor);
+                            c = db.getExerciseData(db.ExerciseTable_2);//sets cursor to second exercise table ...
+                            yData = addData(c);
                             break;
                         case 2:
-                            cursor = db.getExerciseData(db.ExerciseTable_3);
-                            yData = addData(cursor);
+                            c = db.getExerciseData(db.ExerciseTable_3);
+                            yData = addData(c);
                             break;
                         case 3:
-                            cursor = db.getExerciseData(db.ExerciseTable_4);
-                            yData=  addData(cursor);
+                            c = db.getExerciseData(db.ExerciseTable_4);
+                            yData=  addData(c);
                             break;
                         case 4:
-                            cursor = db.getExerciseData(db.ExerciseTable_5);
-                            yData = addData(cursor);
+                            c = db.getExerciseData(db.ExerciseTable_5);
+                            yData = addData(c);
                             break;
                     }
 
-        mchart.setOnChartGestureListener(this);
-        mchart.setOnChartValueSelectedListener(this);
-        mchart.setDragEnabled(true);
-        mchart.setScaleEnabled(false);
+        mchart.setOnChartGestureListener(this);//accepts gestures on the chart from user
+        mchart.setOnChartValueSelectedListener(this);//accepts specific values being selected by user
+        mchart.setDragEnabled(true);//can drag chart to position
+        mchart.setScaleEnabled(false);//scales to fit the screen
 
-        LineDataSet setValues = new LineDataSet(yData, "Weight Lifted");
-        setValues.setColor(getColor(R.color.colorTextBody));
-        setValues.setAxisDependency(YAxis.AxisDependency.LEFT);
+        LineDataSet setValues = new LineDataSet(yData, "Weight Lifted");//sets the y axis values and title
+        setValues.setColor(getColor(R.color.colorTextBody));//sets to body text colour
+        setValues.setAxisDependency(YAxis.AxisDependency.LEFT);//starts data from the left
         List<ILineDataSet> dataSets = new ArrayList<>();
 
-        dataSets.add(setValues);
-        setValues.setLineWidth(6f);
+        dataSets.add(setValues);//adds the values to the data set
+        setValues.setLineWidth(6f);//width of the line, more = more thick line
         LineData data = new LineData(dataSets);
-        mchart.setData(data);
+        mchart.setData(data);//sets the data in the graph
 
-        mchart.setAutoScaleMinMaxEnabled(true);
-        mchart.setBackgroundColor(getColor(R.color.colorBackground));
+        mchart.setAutoScaleMinMaxEnabled(true);//scales chart to min and max values
+        mchart.setBackgroundColor(getColor(R.color.colorBackground));//background used from app background
 
         YAxis leftAxis = mchart.getAxisLeft();
         leftAxis.setTextColor(getColor(R.color.colorTextBody));
         XAxis topAxis = mchart.getXAxis();
         topAxis.setTextColor(getColor(R.color.colorTextBody));
         YAxis rightAxis = mchart.getAxisRight();
-        rightAxis.setTextColor(getColor(R.color.colorTextBody));
+        rightAxis.setTextColor(getColor(R.color.colorTextBody));//sets the colour of all axis to contrast background
 
-        mchart.animateX(600, Easing.EaseInBack); // animate horizontal 3000 milliseconds
-
+        mchart.animateX(600, Easing.EaseInBack); // animate horizontal 3000 milliseconds, looks to load in
 
         TextView textView = findViewById(R.id.graph_view_label);
         textView.setTextColor(getColor(R.color.colorTextBody));
-        textView.setText("Progress Graph");
-        mchart.invalidate();
+        textView.setText("Progress Graph");//sets a title underneath the graph
+        mchart.invalidate();//sets the chart to run with above settings
     }
 
     public ArrayList<Entry> addData(Cursor cursor){

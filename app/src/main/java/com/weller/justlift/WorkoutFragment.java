@@ -24,7 +24,6 @@ import java.util.ArrayList;
 import static com.weller.justlift.ProfileDB.TAG;
 
 public class WorkoutFragment extends Fragment {
-    ExerciseData workout;
     public ProfileDB db;
 
     Button addExercise;
@@ -41,21 +40,20 @@ public class WorkoutFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_workout, container, false);
+        View v = inflater.inflate(R.layout.fragment_workout, container, false);//sets layout to fragment_workout
+        db = new ProfileDB(getContext());//initialises the database
         addExercise = v.findViewById(R.id.addExercise);
+        listView = v.findViewById(R.id.listView);//initialises button and listview
 
-        db = new ProfileDB(getContext());
-        listView = v.findViewById(R.id.listView);
-
-        populateListView();
+        populateListView();//calls populatelistviewmethod
 
         addExercise.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                int listCount = listView.getCount();
-                if (listCount <= 4) { //max number of entries -1 (listview count starts at 0)
-                    Intent intent = new Intent(getContext(), com.weller.justlift.AddExercise.class);
-                    startActivityForResult(intent, 10001);
+            public void onClick(View v) {//when add exercise button clicked
+                int listCount = listView.getCount();//looks at how many exercises already logged
+                if (listCount <= 4) { //max number of entries -1 (listview count starts at 0) IF no more than 5 exercises
+                    Intent intent = new Intent(getContext(), com.weller.justlift.AddExercise.class);//opens add exercise dialog box
+                    startActivityForResult(intent, 10001);//wants result code
                 }
                 else{
                     Toast.makeText(getContext(), "max number of exercises", Toast.LENGTH_LONG);
@@ -65,10 +63,10 @@ public class WorkoutFragment extends Fragment {
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(view.getContext(),AddExerciseWeight.class);
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {//listens to position selected in the list view
+                Intent intent = new Intent(view.getContext(),AddExerciseWeight.class);//opens add exercise weight dialog box
                 intent.putExtra("pos", position);
-                startActivityForResult(intent,10001);
+                startActivityForResult(intent,10001);//wants result
             }
         });
 
@@ -82,26 +80,24 @@ public class WorkoutFragment extends Fragment {
         }
 
     }
-    public void reloadFragment(){
+    public void reloadFragment(){//method refreshes the fragment
         FragmentTransaction ft = getFragmentManager().beginTransaction();
         ft.detach(WorkoutFragment.this).attach(WorkoutFragment.this).commit();//re-loads the fragment
     }
     public void populateListView() {
-        Log.d(TAG, "populateListView: Displaying data in the List View.");
+        Log.d(TAG, "populateListView: Displaying data in the List View.");//log for testing
 
-        Cursor data = db.getExerciseNames();
-        ArrayList<String> listData = new ArrayList<>();
-        int col = data.getColumnCount();
-        String column = Integer.toString(col);
+        Cursor data = db.getExerciseNames();//gets exercise names from db
+        ArrayList<String> listData = new ArrayList<>();//creates arraylist for the exercise names
+        int col = data.getColumnCount();//gets number of columns
+        String column = Integer.toString(col);//converts to int
 
         Log.d(TAG, column);
         while (data.moveToNext()) {//cursor moves through db
             for(int i=1; i<col; i++) {//iterates through columns retrieving user data
-                listData.add(data.getString(i));
+                listData.add(data.getString(i));//adds exercises to the listdata arraylist
             }
-
-            ListAdapter adapter = new ArrayAdapter<>(getContext(), R.layout.my_text_view, listData);
-
+            ListAdapter adapter = new ArrayAdapter<>(getContext(), R.layout.my_text_view, listData);//sets data to my_text_view layout
             listView.setAdapter(adapter);
         }
     }

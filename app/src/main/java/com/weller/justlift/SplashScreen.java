@@ -8,7 +8,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 
-import gr.net.maroulis.library.EasySplashScreen;
+import gr.net.maroulis.library.EasySplashScreen;//imports easysplashscreen library to implement the intended functionality
 
 public class SplashScreen extends AppCompatActivity {
 
@@ -17,38 +17,36 @@ public class SplashScreen extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_splash_screen);
+        setContentView(R.layout.activity_splash_screen);//sets layout to activity_splash_screen
         Intent i = getIntent();
-        Integer code = i.getIntExtra("Code", 0);
+        Integer code = i.getIntExtra("Code", 0);//gets 'code' from shared preferences
         final Double calories = i.getDoubleExtra("Calories", 0);//gets the users needed calories from nutrition
         Log.i(TAG, Integer.toString(code));
-        if (code != 1) {//If screen loads at startup
+        if (code != 1) {//If code doesn't = 1 (this is when app opens normally)
+            int timeOut = 1000;//1000ms viewing time
             EasySplashScreen config = new EasySplashScreen(SplashScreen.this)
                     .withFullScreen()
-                    .withTargetActivity(MainActivity.class)
-                    .withSplashTimeOut(1000)
-                    .withBackgroundResource(R.color.colorBackground)
-                  //  .withBackgroundColor(Color.parseColor("#35454D"))//colour from theme
-                    .withLogo(R.mipmap.ic_launcher)
-                    .withHeaderText("")//couldn't delete this line without crash?
-                    //.withFooterText
-                    // .withBeforeLogoText("heh")
+                    .withTargetActivity(MainActivity.class)//after this runs, main activity will run
+                    .withSplashTimeOut(timeOut)//1000ms viewing time
+                    .withBackgroundResource(R.color.colorBackground)//sets background calour to app theme
+                    .withLogo(R.mipmap.ic_launcher)//icon resource
+                    .withHeaderText("")
                     ;
             config.getHeaderTextView().setTextColor(Color.WHITE);
             //set to view
             View view = config.create();
             setContentView(view);
         }
-        else{//if screen loads when user logs weight after 1 week
-            int timeOut = 2500;
+        else{//if code = 1 (this is when splash screen is displayed before linear regression occurs)
+            int timeOut = 2500;//2.5s display whilst values load
             EasySplashScreen config = new EasySplashScreen(SplashScreen.this)
                     .withFullScreen()
                     .withTargetActivity(MainActivity.class)
-                    .withSplashTimeOut(timeOut)
+                    .withSplashTimeOut(timeOut)//2.5s display whilst values load
                     .withBackgroundResource(R.color.colorBackground)//colour from theme
                     .withLogo(R.mipmap.ic_launcher)
                     .withHeaderText("")//couldn't delete this line without crash?
-                    .withBeforeLogoText("Loading Updated Nutritional Requirements...")
+                    .withBeforeLogoText("Loading Updated Nutritional Requirements...")//tells user nutritional estimates are loading
                     ;
             config.getHeaderTextView().setTextColor(Color.WHITE);
             //set to view
@@ -58,8 +56,8 @@ public class SplashScreen extends AppCompatActivity {
                                             // to allow loading splash screen before going to calc
             handler.postDelayed(new Runnable() {
                 public void run() {
-                    Intent intent = new Intent(SplashScreen.this, LinearRegression.class);
-                    Log.i(TAG, "Calories tag = " + Double.toString(calories));
+                    Intent intent = new Intent(SplashScreen.this, LinearRegression.class);//after delay run linear regression task
+                    Log.i(TAG, "Calories tag = " + Double.toString(calories));//tag for testing
                     intent.putExtra("Calories", calories);//sends users needed calories to linear regression
                     startActivity(intent);
                 }
