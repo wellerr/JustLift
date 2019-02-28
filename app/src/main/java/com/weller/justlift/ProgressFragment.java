@@ -14,15 +14,12 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 import android.widget.ListView;
-
 import java.util.ArrayList;
-
-import static com.weller.justlift.ProfileDB.TAG;
-
 public class ProgressFragment extends Fragment {
 
     private ListView listView;
     public ProfileDB db;
+    private String TAG = "ProgressFragment";
 
     @Nullable
     @Override
@@ -47,7 +44,7 @@ public class ProgressFragment extends Fragment {
     public void populateListView() {
         Log.d(TAG, "populateListView: Displaying data in the List View.");//log for testing purposes
 
-        Cursor data = db.getExerciseNames();//gets names of exercises from database
+        Cursor data = db.getTable(db.Table_4);//gets names of exercises from database
         ArrayList<String> listData = new ArrayList<>();//sets up an arraylist to store the exercises in
         int col = data.getColumnCount();//gets number of columns
         String column = Integer.toString(col);//converts number to a string

@@ -18,13 +18,11 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import java.util.ArrayList;
-
-import static com.weller.justlift.ProfileDB.TAG;
 
 //this class is responsible for the nutrition fragment in the app
 public class NutritionFragment extends Fragment {
+    private String TAG = "NutritionFragment";
     NutritionData nutrition;
     Activity Load;
     public ProfileDB db;
@@ -68,14 +66,13 @@ public class NutritionFragment extends Fragment {
         setRemainingCalories = v.findViewById(R.id.setRemainingCalories);
         setRemainingProtein = v.findViewById(R.id.setRemainingProtein);
         populateListView();//runs populatelistview method, inserts data into the list view
-
         prefs = getContext().getSharedPreferences(ShareName, Context.MODE_PRIVATE);//gets shared preferences to see past data stored in the application
         editor = prefs.edit();//declares a preferences editor
 
         if (mActivity.getIntent().hasExtra("UpdatedCalories")) {//checks to see if updated calories are in the shared preferences (this is true if linear regression has just happened)
           //If LinearRegression has happened, updated calories used instead of caluclated BMR
             editor.putFloat("Calories", Float.valueOf(mActivity.getIntent().getStringExtra("UpdatedCalories")));
-            editor.commit();//Adds the calories extra passed from linear regression class to the shared prefs of the app
+            editor.apply();//Adds the calories extra passed from linear regression class to the shared prefs of the app
         }
         double totalCalories = totalCalories();
         setCalories.setText(String.valueOf((int) totalCalories));//sets textview to the total calculated
@@ -135,7 +132,7 @@ public class NutritionFragment extends Fragment {
 
     public void populateListView() {//method responsible for populating the 3 column list view in the app
         Log.d(TAG, "populateListView: Displaying data in the List View.");
-        Cursor data = db.getNutritionData();//gets the nutrition data table from the database
+        Cursor data = db.getTable(ProfileDB.Table_2);//gets the nutrition data table from the database
         listData = new ArrayList<>();//creates arraylist
         int col = data.getColumnCount();//counts columns in cursor
         String column = Integer.toString(col);

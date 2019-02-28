@@ -21,11 +21,11 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
-import static com.weller.justlift.ProfileDB.TAG;
+
 
 public class WorkoutFragment extends Fragment {
     public ProfileDB db;
-
+    private String TAG = "WorkoutFragment";
     Button addExercise;
 
     private ListView listView;
@@ -56,7 +56,7 @@ public class WorkoutFragment extends Fragment {
                     startActivityForResult(intent, 10001);//wants result code
                 }
                 else{
-                    Toast.makeText(getContext(), "max number of exercises", Toast.LENGTH_LONG);
+                    Toast.makeText(getContext(), "max number of exercises", Toast.LENGTH_LONG).show();
                 }
             }
         });
@@ -87,7 +87,7 @@ public class WorkoutFragment extends Fragment {
     public void populateListView() {
         Log.d(TAG, "populateListView: Displaying data in the List View.");//log for testing
 
-        Cursor data = db.getExerciseNames();//gets exercise names from db
+        Cursor data = db.getTable(ProfileDB.Table_4);//gets exercise names from db
         ArrayList<String> listData = new ArrayList<>();//creates arraylist for the exercise names
         int col = data.getColumnCount();//gets number of columns
         String column = Integer.toString(col);//converts to int

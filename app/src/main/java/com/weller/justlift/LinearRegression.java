@@ -30,9 +30,9 @@ public class LinearRegression extends AppCompatActivity {//     This class perfo
         double calories = userBMR;
         db = new ProfileDB(getApplicationContext());//initialise db
 
-        Cursor c = db.getWeeklyTable();//gets weekly calories and weekly weight
+        Cursor c = db.getTable(ProfileDB.Table_5);//gets weekly calories and weekly weight
         Cursor z;
-        Cursor j = db.getProfileData();//gets the profile information
+        Cursor j = db.getTable(ProfileDB.Table_1);//gets the profile information
         int x = c.getCount();//use this number to compare current weight to last weeks
         int lastweek;
         int currentweek;//ints set up for last and current week
@@ -74,7 +74,7 @@ public class LinearRegression extends AppCompatActivity {//     This class perfo
             double[] l = {Calories, weeklyBMR, weeklyBMR + 1750, weeklyBMR + 3500, weeklyBMR + 5250, weeklyBMR + 7000};//initial training data setup using 3500kcal rule
             double[] y = {weightChange, 0, 0.5, 1, 1.5, 2};//3500kcal rule
             db.addFirstLinearRegression(l, y);//runs first linear regression method from ProfileDB
-            z = db.getLinearRegression();
+            //z =  db.getTable(db.Table_LinearRegression); //can use for viewing table
             caloriesNeeded = Calculate(db, rateChange);//runs calculate method by entering db class and rate change desired by user weight
             caloriesText.setText(caloriesNeeded);//sets the calories needed to text on page
         }

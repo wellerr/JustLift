@@ -42,23 +42,23 @@ public class ProgressGraph extends AppCompatActivity implements OnChartGestureLi
 
           switch (posValue){//runs particular code based on what position of the listview in progressfragment was selected
                         case 0:
-                            c = db.getExerciseData(db.ExerciseTable_1);//sets cursor to first exercise table
+                            c = db.getTable(ProfileDB.ExerciseTable_1);//sets cursor to first exercise table
                             yData = addData(c);//sets ydata to the information read from the cursor
                             break;//breaks out of switch and sends the ydata to the next part of code
                         case 1:
-                            c = db.getExerciseData(db.ExerciseTable_2);//sets cursor to second exercise table ...
+                            c = db.getTable(ProfileDB.ExerciseTable_2);//sets cursor to second exercise table ...
                             yData = addData(c);
                             break;
                         case 2:
-                            c = db.getExerciseData(db.ExerciseTable_3);
+                            c = db.getTable(ProfileDB.ExerciseTable_3);
                             yData = addData(c);
                             break;
                         case 3:
-                            c = db.getExerciseData(db.ExerciseTable_4);
+                            c = db.getTable(ProfileDB.ExerciseTable_4);
                             yData=  addData(c);
                             break;
                         case 4:
-                            c = db.getExerciseData(db.ExerciseTable_5);
+                            c = db.getTable(ProfileDB.ExerciseTable_5);
                             yData = addData(c);
                             break;
                     }

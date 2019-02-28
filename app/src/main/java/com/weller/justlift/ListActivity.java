@@ -14,7 +14,7 @@ import java.util.ArrayList;
 public class ListActivity extends AppCompatActivity {
 
     private static final String TAG = "ListActivity";
-    ProfileDB myDB;
+    ProfileDB db;
 
     private ListView listView;
     //this class is used to create a list of the user's profile data to check when testing the app during development, will be deleted in stable version
@@ -24,7 +24,7 @@ public class ListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.list_layout);//sets display to list layout xml
         listView = findViewById(R.id.listView); //finds the list view from xml file
-        myDB = new ProfileDB(this);//instantiates database from profileDB
+        db = new ProfileDB(this);//instantiates database from profileDB
 
         populateListView();//calls populatelistview method, this populates listview with entries from user profile
     }
@@ -32,7 +32,7 @@ public class ListActivity extends AppCompatActivity {
     public void populateListView() {
         Log.d(TAG, "populateListView: Displaying data in the List View.");//log used to test if method is running correctly
 
-        Cursor data = myDB.getProfileData();//cursor used to iterate through database records
+        Cursor data = db.getTable(ProfileDB.Table_1);//cursor used to iterate through database records
         ArrayList<String> listData = new ArrayList<>();//creates arraylist to read into the listview
         int col = data.getColumnCount();//counts number of columns from table in db
         String column = Integer.toString(col);//this is created to display in logs how many columns code detects for testing
