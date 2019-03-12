@@ -132,7 +132,7 @@ public class NutritionFragment extends Fragment {
 
     public void populateListView() {//method responsible for populating the 3 column list view in the app
         Log.d(TAG, "populateListView: Displaying data in the List View.");
-        Cursor data = db.getTable(ProfileDB.Table_2);//gets the nutrition data table from the database
+        Cursor data = db.getTable(db.Table_2);//gets the nutrition data table from the database
         listData = new ArrayList<>();//creates arraylist
         int col = data.getColumnCount();//counts columns in cursor
         String column = Integer.toString(col);
@@ -221,7 +221,7 @@ public class NutritionFragment extends Fragment {
 
     public Double calculateCaloriesLeft(ArrayList<String> profile, Double remainingCalories) {
         int age = Integer.parseInt(profile.get(0));
-        int height = Integer.parseInt(profile.get(1));
+        double height = Double.parseDouble(profile.get(1));
         int weight = Integer.parseInt(profile.get(2));
         String gender = profile.get(3);//gets data for each section
         String activity = profile.get(4);
@@ -257,7 +257,7 @@ public class NutritionFragment extends Fragment {
         return BMR;
     }
 
-    public double switchStatement(String gender, String activity, Double caloriesLeft, int height, int age, int weight) {
+    public double switchStatement(String gender, String activity, Double caloriesLeft, double height, int age, int weight) {
         //This method calculates a person's BMR using harris-benedict equation
         switch (gender) {//switch statement checks all profile entries to find their specific 'caloriesLeft'
             case "Male":

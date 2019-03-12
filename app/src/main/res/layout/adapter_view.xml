@@ -35,6 +35,4 @@
         android:layout_weight="33.3"
         android:textColor="@color/colorTextBody"/>
 
-
-
 </LinearLayout>

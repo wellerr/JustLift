@@ -26,6 +26,7 @@
             android:label="Add Exercise"
             android:theme="@style/AppTheme.Dialog"/>
         <activity android:name=".AddExerciseWeight"
+            android:label="Add Weight"
             android:theme="@style/AppTheme.Dialog"/>
         <activity android:name=".ProgressGraph"
             android:screenOrientation="portrait"/>

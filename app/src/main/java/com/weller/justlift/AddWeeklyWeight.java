@@ -38,8 +38,8 @@ public class AddWeeklyWeight extends AppCompatActivity{
                 Toast.makeText(getApplicationContext(), "Enter weight", Toast.LENGTH_LONG).show();//show error
             }
             else if(updateWeightText.getText().toString().isEmpty() == false) {//if user enters info
-                int updatedWeight = Integer.parseInt(updateWeightText.getText().toString());//converts weight to int
-                    Log.i(TAG, Integer.toString(updatedWeight));//logs weight for testing
+                double updatedWeight = Double.parseDouble(updateWeightText.getText().toString());//converts weight to int
+                    Log.i(TAG, Double.toString(updatedWeight));//logs weight for testing
                 dayCount++;//when added daycount increments
                 db.updateDayCount(getApplicationContext(), dayCount);//updates daycount
                 db.addToWeeklyTable(updatedWeight);//adds weight for week and total calories for week

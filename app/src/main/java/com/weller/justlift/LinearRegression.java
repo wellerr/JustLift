@@ -60,10 +60,10 @@ public class LinearRegression extends AppCompatActivity {//     This class perfo
         Log.i(TAG, "x is " + Integer.toString(x));//log for testing
         if (x == 1) {//if count is 1 (first week of results)
             c.moveToFirst();//move to start of weekly food table
-            double firstWeightChange = c.getInt(2);//column for weekly weight
+            double firstWeightChange = c.getDouble(2);//column for weekly weight
             double Calories = c.getInt(1);//column for weekly calories consumed
             j.moveToFirst();//move to start of profile table
-            double originalWeight = j.getInt(5);//column for profile weight (this is used as its the only weight can use at first linear regression run)
+            double originalWeight = j.getDouble(5);//column for profile weight (this is used as its the only weight can use at first linear regression run)
             weightChange = 2.2 * (firstWeightChange - originalWeight);//finds weight change converts to lbs
 
             //this has to be done as no records to compare in weekly weight so starting
@@ -151,7 +151,6 @@ public class LinearRegression extends AppCompatActivity {//     This class perfo
         double doubleCaloriesNeeded = ((rateChange - intercept)/slope)/7;// y=mx+c rearranged to m = y-c/x to calculate calories for week, then divided by 7
         int caloriesNeeded = (int) Math.round(doubleCaloriesNeeded);//rounds calories to an int
         Log.i("Linear Regression", value.format(caloriesNeeded));//logs exact value for testing
-        String calories = value.format(caloriesNeeded);
-        return  calories;//returns calories needed
+        return value.format(caloriesNeeded);//returns calories needed
     }
 }

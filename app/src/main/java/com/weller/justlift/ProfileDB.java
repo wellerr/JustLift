@@ -64,16 +64,16 @@ public class ProfileDB extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {//on class creation, all tables are created
-        db.execSQL("create table " + Table_1 + " (ID INTEGER PRIMARY KEY AUTOINCREMENT,FirstName TEXT,Surname TEXT,Age INTEGER, Height INTEGER, Weight INTEGER, Gender TEXT, Activity TEXT, Gains TEXT)");
+        db.execSQL("create table " + Table_1 + " (ID INTEGER PRIMARY KEY AUTOINCREMENT,FirstName TEXT,Surname TEXT,Age INTEGER, Height DOUBLE, Weight DOUBLE, Gender TEXT, Activity TEXT, Gains TEXT)");
         db.execSQL("create table " + Table_2 + " (ID INTEGER PRIMARY KEY AUTOINCREMENT,MealName TEXT,Calories INTEGER,Protein INTEGER, Day INTEGER)");
         db.execSQL("create table " + Table_3 + " (ID INTEGER PRIMARY KEY AUTOINCREMENT,MealName TEXT,Calories INTEGER,Protein INTEGER, Day INTEGER)");
         db.execSQL("create table " + Table_4 + " (ID INTEGER PRIMARY KEY AUTOINCREMENT,ExerciseName TEXT)");
         db.execSQL("create table " + Table_5 + " (ID INTEGER PRIMARY KEY AUTOINCREMENT,WeeklyCalories DOUBLE, AddWeeklyWeight DOUBLE)");
-        db.execSQL("create table " + ExerciseTable_1 + " (ID INTEGER PRIMARY KEY AUTOINCREMENT,Weight INTEGER, DAY INTEGER)");
-        db.execSQL("create table " + ExerciseTable_2 + " (ID INTEGER PRIMARY KEY AUTOINCREMENT,Weight INTEGER, DAY INTEGER)");//setting up 5 exercise tables will increase later in development
-        db.execSQL("create table " + ExerciseTable_3 + " (ID INTEGER PRIMARY KEY AUTOINCREMENT,Weight INTEGER, DAY INTEGER)");
-        db.execSQL("create table " + ExerciseTable_4 + " (ID INTEGER PRIMARY KEY AUTOINCREMENT,Weight INTEGER, DAY INTEGER)");
-        db.execSQL("create table " + ExerciseTable_5 + " (ID INTEGER PRIMARY KEY AUTOINCREMENT,Weight INTEGER, DAY INTEGER)");
+        db.execSQL("create table " + ExerciseTable_1 + " (ID INTEGER PRIMARY KEY AUTOINCREMENT,Weight DOUBLE, DAY INTEGER)");
+        db.execSQL("create table " + ExerciseTable_2 + " (ID INTEGER PRIMARY KEY AUTOINCREMENT,Weight DOUBLE, DAY INTEGER)");
+        db.execSQL("create table " + ExerciseTable_3 + " (ID INTEGER PRIMARY KEY AUTOINCREMENT,Weight DOUBLE, DAY INTEGER)");
+        db.execSQL("create table " + ExerciseTable_4 + " (ID INTEGER PRIMARY KEY AUTOINCREMENT,Weight DOUBLE, DAY INTEGER)");
+        db.execSQL("create table " + ExerciseTable_5 + " (ID INTEGER PRIMARY KEY AUTOINCREMENT,Weight DOUBLE, DAY INTEGER)");
         db.execSQL("create table " + Table_LinearRegression + " (ID INTEGER PRIMARY KEY AUTOINCREMENT,WeightChange DOUBLE, WeeklyCalories INTEGER)");
 
     }//executes query put as argument
@@ -114,8 +114,8 @@ public class ProfileDB extends SQLiteOpenHelper {
             deleteProfileData();//if table has records delete, then begin the add process
         }
         int age = Integer.parseInt(ageString);
-        int height = Integer.parseInt(heightString);//Change string values into int before putting into db
-        int weight = Integer.parseInt(weightString);
+        double height = Double.parseDouble(heightString);//Change string values into int before putting into db
+        double weight = Double.parseDouble(weightString);
 
         ContentValues contentValues = new ContentValues();
         contentValues.put(COL_1, firstName);
@@ -148,10 +148,8 @@ public class ProfileDB extends SQLiteOpenHelper {
     }
     boolean addExerciseData(String exercise){
         SQLiteDatabase db = this.getWritableDatabase();
-
         ContentValues contentValues = new ContentValues();
         contentValues.put(jCol_1, exercise);
-
         Log.i(TAG, "addExerciseData: Adding " + exercise + " " + Table_4);
         long result = db.insert(Table_4, null, contentValues);
         return truefalse(result);

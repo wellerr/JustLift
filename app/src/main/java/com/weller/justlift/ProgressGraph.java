@@ -88,7 +88,7 @@ public class ProgressGraph extends AppCompatActivity implements OnChartGestureLi
         YAxis rightAxis = mchart.getAxisRight();
         rightAxis.setTextColor(getColor(R.color.colorTextBody));//sets the colour of all axis to contrast background
 
-        mchart.animateX(600, Easing.EaseInBack); // animate horizontal 3000 milliseconds, looks to load in
+        mchart.animateX(600, Easing.EaseInBack); // animate horizontal 3000 milliseconds, loads in gradually
 
         TextView textView = findViewById(R.id.graph_view_label);
         textView.setTextColor(getColor(R.color.colorTextBody));

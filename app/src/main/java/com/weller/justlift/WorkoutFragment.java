@@ -66,7 +66,7 @@ public class WorkoutFragment extends Fragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {//listens to position selected in the list view
                 Intent intent = new Intent(view.getContext(),AddExerciseWeight.class);//opens add exercise weight dialog box
                 intent.putExtra("pos", position);
-                startActivityForResult(intent,10001);//wants result
+                startActivityForResult(intent,10001);//waits for result code from the user input of weight lifted
             }
         });
 

@@ -56,7 +56,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         drawer.addDrawerListener(toggle);//adds 'toggle' to the nav drawer
         toggle.syncState();
-        //oncreate will open homefragment
     }
 
     @Override
@@ -82,7 +81,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                         new ProgressFragment()).commit();//when nav_progress is selected, replaces the current fragment with workout fragment
                 break;//once clicked, executed and then continues
-
         }
         drawer.closeDrawer(GravityCompat.START);//once selected, drawer closes (if not stated it remains open)
         return true; // selects the correct item when clicked
